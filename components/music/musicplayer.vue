@@ -202,7 +202,8 @@ export default {
     }
   },
   mounted() {
-    setTimeout(this.mucmouseleavefunc, 6000)
+    setTimeout(this.mucmouseenterfunc, 1500)
+    setTimeout(this.mucmouseleavefunc, 2000)
   },
   created() {
     this.getplaylist({ id: '2801005211' })
@@ -239,6 +240,7 @@ p {
   margin-bottom: 0px;
 }
 #musicplayer {
+  border-radius: 5px;
   box-shadow: 3px 3px 12px rgba(23, 24, 39, 0.6);
   z-index: 99;
   position: fixed;
