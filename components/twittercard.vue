@@ -151,13 +151,16 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['lettersEdit']),
+    ...mapMutations({
+      lettersEdit: 'content/lettersEdit',
+      removed: 'content/remove'
+    }),
     swipe(direction) {},
     watchnow() {
       this.lettersEdit({ data: this.item, type: 'see' })
     },
     remove() {
-      this.$store.commit('remove', { type: 'letters', n: this.n })
+      this.removed({ type: 'letters', n: this.n })
     },
     addunlike() {
       if (this.$store.state.user.name) {
