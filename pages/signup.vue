@@ -1,7 +1,7 @@
 
 <template>
   <v-row class="rowstyle" align="center" justify="center">
-    <v-col cols="12" sm="9" md="6" lg="4">
+    <v-col cols="12" sm="10" md="8" lg="6" xl="4">
       <v-card color="rgba(255,255,255,0)" class="elevation-12" dark>
         <v-toolbar color="rgba(255,255,255,0)" dark flat>
           <v-toolbar-title>注册</v-toolbar-title>
@@ -46,7 +46,7 @@
               @click:append="show1 = !show1"
               prepend-icon="mdi-lock"
             />
-            <div class="d-flex">
+            <!-- <div class="d-flex">
               <v-text-field
                 prepend-icon="mdi-refresh"
                 @click:prepend="getVerifycode"
@@ -63,7 +63,7 @@
                 height="35px"
                 :src="this.verifycode.verifyCodeImgUrl"
               ></v-img>
-            </div>
+            </div>-->
 
             <v-radio-group row v-model="user.gender">
               <v-radio
@@ -123,8 +123,8 @@ export default {
         { gender: '男', color: 'cyan' },
         { gender: '女', color: 'red' }
       ],
-      vCode: '',
-      verifycode: {},
+      // vCode: '',
+      // verifycode: {},
       tempurls: [],
       show2: false,
       avatarflag: false,
@@ -162,7 +162,7 @@ export default {
         v => !!v || 'password is required',
         v => (v && v.length > 5) || 'password must be more than 5 characters'
       ],
-      vcodeRules: [v => !!v || 'verifycode is required', v => this.wharrule(v)],
+      // vcodeRules: [v => !!v || 'verifycode is required', v => this.wharrule(v)],
       // arrayss: [this.wharrule, this.getVerifycode],
 
       telRules: [
@@ -196,35 +196,32 @@ export default {
           })
       }
     },
-    getVerifycode() {
-      this.$axios
-        .get(
-          'http://www.mxnzp.com/api/verifycode/code?len=5&app_id=tguwfpqsppmjnoli&app_secret=cGFyc25Bam80dXFlQ3FlaGtmeS9Kdz09',
-          {
-            headers: { 'Access-Control-Allow-Origin': '*' }
-          }
-        )
-        .then(res => {
-          this.vCode = ''
-          this.verifycode = res.data
-        })
-    },
+    // getVerifycode() {
+    //   this.$axios
+    //     .get(
+    //       'http://www.mxnzp.com/api/verifycode/code?len=5&app_id=tguwfpqsppmjnoli&app_secret=cGFyc25Bam80dXFlQ3FlaGtmeS9Kdz09'
+    //     )
+    //     .then(res => {
+    //       this.vCode = ''
+    //       this.verifycode = res.data
+    //     })
+    // },
     imgsrcicon(e) {
       this.user.avatar = e.url
       // console.log(this.user.imgsrc)
-    },
-    wharrule(v) {
-      // console.log(v, this.verifycode.verifyCode)
-      if (v !== this.verifycode.verifyCode) {
-        return '验证码错误请从新输入'
-      } else {
-        return true
-      }
     }
-  },
-  mounted() {
-    this.getVerifycode()
+    // wharrule(v) {
+    //   // console.log(v, this.verifycode.verifyCode)
+    //   if (v !== this.verifycode.verifyCode) {
+    //     return '验证码错误请从新输入'
+    //   } else {
+    //     return true
+    //   }
+    // }
   }
+  // mounted() {
+  //   this.getVerifycode()
+  // }
 }
 </script>
 <style>

@@ -120,29 +120,7 @@ export default {
     getMusicAlbumm(e) {
       this.$store.commit('getmusic', { type: 'album', data: e })
       this.$router.push('/music/albumDetail')
-      this.$axios
-        .get(this.$store.state.musicserve + '/playlist/detail?id=' + e.id)
-        .then(res => {
-          this.musicCardFlag = false //musicAlbum && !musicCardFlag
-          // 获取歌单全部歌曲id来请求歌曲
-          //   console.log(res.playlist.trackIds)
-          let idlists = []
-          res.playlist.trackIds.forEach((e, i) => {
-            idlists.push(e.id)
-          })
-
-          this.$axios
-
-            .get(
-              this.$store.state.musicserve +
-                '/song/detail?ids=' +
-                idlists.join(',')
-            )
-            .then(res => {
-              this.$store.commit('getmusic', { type: 'songs', data: res.songs })
-              // this.$store.commit('getmusic',{type:'playlist',data:res.songs})
-            })
-        })
+      this.$store.dispatch('music/getplaylist', { id: e.id })
     },
 
     // 获取歌曲评论

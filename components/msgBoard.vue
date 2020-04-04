@@ -1,8 +1,16 @@
 <template>
   <v-card flat color="transparent">
-    <v-list-item two-line>
-      <v-list-item-content class="align-self-start">
-        <v-textarea solo flat filled v-model="msgcontent" name="input-7-4" label="真的不来写两句吗???"></v-textarea>
+    <v-list-item two-line class="pa-0">
+      <v-list-item-content class="align-self-start pa-0">
+        <v-textarea
+          background-color="rgba(255,255,255,0.6)"
+          solo
+          flat
+          filled
+          v-model="msgcontent"
+          name="input-7-4"
+          label="真的不来写两句吗???"
+        ></v-textarea>
         <v-card-actions>
           <v-btn
             :disabled="btnDisabled && $store.state.user.name ? false:true"

@@ -5,7 +5,7 @@
         <v-toolbar color="cyan" dense>
           <v-toolbar-title>{{`搜索到${convert(searchData.length)}条结果`}}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn icon @click="$store.commit('changeflag')">
+          <v-btn icon @click="$emit('closeflag')">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-toolbar>
@@ -30,8 +30,6 @@
       </v-card>
     </v-col>
   </v-row>
-  <!-- </div>
-  </div>-->
 </template>
 
 <script>
@@ -89,6 +87,9 @@ export default {
 .searesult {
   width: 100vw;
   position: fixed;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
   z-index: 999;
 }
 .box {

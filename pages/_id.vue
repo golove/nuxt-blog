@@ -1,21 +1,22 @@
 <template>
   <v-card flat color="rgba(255,255,255,0)">
-    <v-col>
-      <editor
-        :autofocus="true"
-        :init-data="initData"
-        :minHeight="900"
-        :config="config"
-        ref="editor"
-        @ready="onReady"
-        @change="onChange"
-      />
-    </v-col>
-
-    <v-card-actions class="pt-0">
-      <action :item="initData" :flag="true" :disabled="false" />
-    </v-card-actions>
-    <msg-board :item="initData" />
+    <v-row justify="center">
+      <v-col cols="12" xl="7" lg="9" md="11">
+        <editor
+          :autofocus="true"
+          :init-data="initData"
+          :minHeight="900"
+          :config="config"
+          ref="editor"
+          @ready="onReady"
+          @change="onChange"
+        />
+        <v-card-actions>
+          <action :item="initData" :flag="true" :disabled="false" />
+        </v-card-actions>
+        <msg-board :item="initData" />
+      </v-col>
+    </v-row>
   </v-card>
   <!-- </div> -->
 </template>

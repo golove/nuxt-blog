@@ -2,7 +2,8 @@
   <v-card flat color="rgba(255,255,255,0)">
     <v-row v-if="$store.state.music.albums.length>0" justify="center">
       <v-col
-        lg="2"
+        xl="2"
+        lg="3"
         md="3"
         sm="4"
         xs="12"
@@ -53,8 +54,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['reqSong', 'reqMusic', 'lastMusic', 'nextMusic']),
-    ...mapMutations(['getmusic']),
+    ...mapActions({
+      nextMusic: 'music/nextMusic',
+      getplaylist: 'music/getplaylist'
+    }),
+    ...mapMutations({ getmusic: 'music/getmusic' }),
     getMusicAlbumm(e) {
       this.$router.push('/music/albumDetail')
       this.playlist(e)
@@ -65,26 +69,7 @@ export default {
     },
     playlist(e) {
       this.getmusic({ type: 'album', data: e })
-      this.$axios
-        .get(this.$store.state.musicserve + '/playlist/detail?id=' + e.id)
-        .then(res => {
-          // 获取歌单全部歌曲id来请求歌曲
-          //   console.log(res.playlist.trackIds)
-          let idlists = []
-          res.playlist.trackIds.forEach((e, i) => {
-            idlists.push(e.id)
-          })
-          this.$axios
-            .get(
-              this.$store.state.musicserve +
-                '/song/detail?ids=' +
-                idlists.join(',')
-            )
-            .then(res => {
-              this.getmusic({ type: 'songs', data: res.songs })
-              this.getmusic({ type: 'playlist', data: res.songs })
-            })
-        })
+      this.getplaylist({ id: e.id })
     }
   }
 }

@@ -108,13 +108,16 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['articleEdit']),
+    ...mapMutations({
+      articleEdit: 'content/articleEdit',
+      removed: 'content/remove'
+    }),
     showDetail() {
       this.$router.push(`/${this.item._id}`)
       this.articleEdit({ data: this.item, type: 'see' })
     },
     remove() {
-      this.$store.commit('remove', { type: 'article', n: this.n })
+      this.removed({ type: 'article', n: this.n })
     },
     filterData(item) {
       for (let e of item.blocks) {

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :class="gray?'graystyle':''">
     <v-navigation-drawer
       color="rgba(255, 255, 255, 0.1)"
       v-model="drawer"
@@ -10,7 +10,7 @@
     >
       <v-list>
         <v-list-item three-line>
-          <v-list-item-avatar size="65">
+          <v-list-item-avatar size="45">
             <img
               :src="$store.state.user.avatar?$store.state.user.avatar:'http://yanxuan.nosdn.127.net/85993c9896fee4a893dc299cd09581d9.jpg'"
             />
@@ -40,13 +40,40 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item v-for="item in actions" :key="item.text" @click.stop="item.action">
-          <v-list-item-action>
-            <v-icon>{{item.icon}}</v-icon>
+        <v-subheader>SUBSCRIPTIONS</v-subheader>
+        <v-list-item>
+          <v-list-item-action @click="changeflag1">
+            <v-icon>mdi-box</v-icon>
           </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.text" />
-          </v-list-item-content>
+          <v-switch v-model="cliped" label="cliped"></v-switch>
+        </v-list-item>
+
+        <v-list-item>
+          <v-list-item-action @click="changeflag2">
+            <v-icon>{{`mdi-chevron-${miniVariant ? 'right' : 'left'}`}}</v-icon>
+          </v-list-item-action>
+          <v-switch v-model="miniVariant" label="miniVariant"></v-switch>
+        </v-list-item>
+
+        <v-list-item>
+          <v-list-item-action @click="changeflag3">
+            <v-icon>{{`mdi-chevron-${$vuetify.rtl ? 'right' : 'left'}`}}</v-icon>
+          </v-list-item-action>
+          <v-switch v-model="$vuetify.rtl" label="rightToLeft"></v-switch>
+        </v-list-item>
+
+        <v-list-item>
+          <v-list-item-action @click="changeflag4">
+            <v-icon>{{$vuetify.theme.dark?'mdi-sunshine':'mdi-moon-waxing-crescent'}}</v-icon>
+          </v-list-item-action>
+          <v-switch v-model="$vuetify.theme.dark" :label="$vuetify.theme.dark?'light':'dark'"></v-switch>
+        </v-list-item>
+
+        <v-list-item>
+          <v-list-item-action @click="graystyle">
+            <v-icon>{{`mdi-chevron-${miniVariant ? 'right' : 'left'}`}}</v-icon>
+          </v-list-item-action>
+          <v-switch v-model="gray" label="gray"></v-switch>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -102,17 +129,15 @@
 
       <v-spacer />
     </v-app-bar>
-    <music
-      :musicdata="$store.state.music.albums[0]"
-      :tracks="$store.state.music.songs"
-      style="zIndex:999 ;position:fixed"
-    />
+
     <v-content :class="$vuetify.theme.dark?'':'backgroundstylecolor'">
+      <musicplayer />
       <v-container>
         <transition name="list-complete">
           <search-result
-            class="list-item"
-            v-if="$store.state.searchflag"
+            class="list-complete-item"
+            @closeflag="changeFlag"
+            v-if="$store.state.content.searchflag"
             :searchData="$store.state.content.searchData"
           />
         </transition>
@@ -127,13 +152,13 @@
 </template>
 
 <script>
-// import musicplayer from '~/components/musicplayer'
+import musicplayer from '~/components/music/musicplayer'
 import searchResult from '~/components/searchResult/searchResult'
 import blogfoot from '~/components/blogfoot.vue'
-import music from '~/components/music/Music'
+// import music from '~/components/music/Music'
 import { mapActions, mapMutations } from 'vuex'
 export default {
-  components: { searchResult, blogfoot, music },
+  components: { searchResult, blogfoot, musicplayer },
   data() {
     return {
       cliped: true,
@@ -142,33 +167,7 @@ export default {
       miniVariant: false,
       searchmodeldata: '',
       searchlabel: '搜文章,作者,分类,发布时间',
-      actions: [
-        {
-          text: 'fixed',
-          action: this.changeflag,
-          icon: 'mdi-minus'
-        },
-        {
-          text: 'cliped',
-          action: this.changeflag1,
-          icon: 'mdi-box'
-        },
-        {
-          text: 'miniVariant',
-          action: this.changeflag2,
-          icon: `mdi-chevron-${this.miniVariant ? 'right' : 'left'}`
-        },
-        {
-          text: 'rightToLeft',
-          action: this.changeflag3,
-          icon: 'mdi-chevron-right'
-        },
-        {
-          text: 'dark',
-          action: this.changeflag4,
-          icon: 'mdi-moon-waxing-crescent'
-        }
-      ],
+      gray: true,
       items: [
         {
           icon: 'mdi-apps',
@@ -196,16 +195,19 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'getdata',
-      'userexit',
-      'userlogin',
-      'nextMusic',
-      'reqMusic',
-      'lastMusic',
-      'playlist'
-    ]),
-    ...mapMutations(['setdata', 'searchFunc', 'searchMsgFunc']),
+    ...mapActions({
+      userexit: 'userexit',
+      userlogin: 'userlogin',
+      getdata: 'content/getdata',
+      reqMusic: 'music/reqMusic'
+    }),
+    // ...mapMutations(['setdata', 'searchFunc', 'searchMsgFunc']),
+    ...mapMutations({
+      setdata: 'content/setdata',
+      searchFunc: 'content/searchFunc',
+      searchMsgFunc: 'content/searchMsgFunc',
+      changeFlag: 'content/changeflag'
+    }),
     // 控件方法
     changeflag() {
       this.fixed = !this.fixed
@@ -221,6 +223,9 @@ export default {
     },
     changeflag4() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    },
+    graystyle() {
+      this.gray = !this.gray
     },
 
     search(string) {
@@ -246,7 +251,7 @@ export default {
 
   watch: {
     isActive: function(n, o) {
-      this.$store.commit('changeflag')
+      this.changeFlag()
       this.searchmodeldata = ''
       if (n.indexOf('/music') !== -1) {
         this.searchlabel = '搜音乐,歌手,专辑'
@@ -264,10 +269,25 @@ export default {
     if (this.$store.state.content.letters.length < 1) {
       this.getdata({ api: '/api/letters', type: 'letters' })
     }
+    if (this.$store.state.content.avatars.length < 1) {
+      this.getdata({ api: '/api/dlavatar', type: 'avatars' })
+    }
   }
 }
 </script>
-<style  scoped>
+<style>
+.list-complete-item {
+  /* max-width: 625px; */
+  transition: all 1.2s;
+}
+.list-complete-enter, .list-complete-leave-to
+/* .list-complete-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateX(10px);
+}
+.list-complete-leave-active {
+  position: absolute;
+}
 .backgroundstylecolor {
   background: rgba(255, 255, 255, 0.6);
 }
@@ -277,7 +297,20 @@ export default {
   left: 30px;
   z-index: 999;
 }
+.graystyle {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -webkit-filter: grayscale(1);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+}
 .theme--light.v-application {
+  /* !!!!!!!!!使网站变灰!!!!!!!!!!!!! */
+
+  /* ^^^^^^^^^^^使网站变灰^^^^^^^^^^ */
+
   /* animation: rotate 90s infinite linear; */
   background: radial-gradient(
     200% 100% at bottom center,

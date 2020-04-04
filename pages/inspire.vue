@@ -64,7 +64,7 @@ export default {
     },
 
     shuffle: function() {
-      this.$store.commit('shuffle', 'letters')
+      this.$store.commit('content/shuffle', 'letters')
     },
 
     beforeEnter: function(el) {

@@ -42,7 +42,7 @@ export default {
     return {}
   },
   methods: {
-    ...mapMutations(['articleEdit']),
+    ...mapMutations({ articleEdit: 'content/articleEdit' }),
     addLike() {
       if (this.$store.state.user.name) {
         this.articleEdit({ data: this.item, type: 'like' })

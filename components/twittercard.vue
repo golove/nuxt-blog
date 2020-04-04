@@ -234,14 +234,14 @@ export default {
 .card1_1 {
   transform: rotateY(180deg);
 }
-
+.textsyle {
+  transition: max-height 0.3s;
+}
 .tstyle {
-  transition: all 0.3s;
-  height: auto;
+  max-height: 800px;
 }
 .wstyle {
-  transition: all 0.3s;
-  height: 130px;
+  max-height: 130px;
   overflow: hidden;
 }
 .paginatsss {

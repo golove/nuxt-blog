@@ -2,12 +2,12 @@
   <table width="100%" border="0" cellspacing="0" cellpadding="4" class="tabtop" align="center">
     <thead>
       <tr class="etdstyle">
-        <th class="text-left" style="width:30px"></th>
-        <th class="text-left">歌曲</th>
-        <th class="text-left">歌手</th>
-        <th class="text-left">专辑</th>
-        <th class="text-left">时长</th>
-        <th class="text-left" style="width:80px">热度</th>
+        <th class="text-left" style="width:30px;margin:8px"></th>
+        <th class="text-left" style="margin:8px">歌曲</th>
+        <th class="text-left" style="margin:8px">歌手</th>
+        <th class="text-left" style="margin:8px">专辑</th>
+        <th class="text-left" style="margin:8px">时长</th>
+        <!-- <th class="text-left" style="width:80px">热度</th> -->
       </tr>
     </thead>
     <tr
@@ -26,9 +26,9 @@
       <td v-else>{{ item.artists[0].name }}</td>
       <td v-if="item.al">{{ item.al.name }}</td>
       <td v-else>{{ item.album.name }}</td>
-      <td v-if="item.dt">{{ item.dt }}</td>
-      <td v-else>{{ item.duration }}</td>
-      <td>{{ item.mark }}</td>
+      <td v-if="item.dt">{{timeToMinute(item.dt) }}</td>
+      <td v-else>{{timeToMinute(item.duration) }}</td>
+      <!-- <td>{{ item.mark }}</td> -->
     </tr>
   </table>
 </template>
@@ -41,20 +41,37 @@ export default {
   },
   methods: {
     playMusic(e) {
-      this.$store.dispatch('playlist', e)
+      this.$store.dispatch('music/playlist', e)
+    },
+    // 格式化时间
+    timeToMinute(times) {
+      if (times > -1) {
+        let s = times / 1000
+        let m = 0
+        let st = 0
+        if (s < 60) {
+          m = 0
+        } else {
+          m = Math.floor(s / 60)
+          st = Math.floor(s % 60)
+        }
+
+        return `${m}:${st}`
+      }
     }
   }
 }
 </script>
 
 <style>
-tbody.tr:hover {
-  background: #fff;
+tr:hover {
+  background-color: rgba(253, 60, 124, 0.1);
 }
 .tabtop td {
   height: 35px;
   line-height: 150%;
 }
+
 .otdstyle {
   background-color: rgba(255, 255, 255, 0.5);
 }

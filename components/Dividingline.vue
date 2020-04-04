@@ -1,8 +1,15 @@
 <template>
-  <div @click="$emit('changebadge')" class="divline align-center">
-    <v-badge overlap bordered :content="item.content" :value="item.badge" :color="item.color">
-      <div class="dividline" :class="$vuetify.theme.dark?'dividline1':'dividline2'">
-        <v-icon @click="$emit('shuffle',item.type)">{{item.icon}}</v-icon>
+  <div @click="$emit('shuffle',item.type)" class="divline align-center">
+    <v-badge
+      @click="$emit('changebadge')"
+      overlap
+      bordered
+      :content="item.content"
+      :value="item.badge"
+      :color="item.color"
+    >
+      <div class="dividline" :class="dark?'dividline1':'dividline2'">
+        <v-icon>{{item.icon}}</v-icon>
         {{item.title}}
       </div>
     </v-badge>
@@ -12,13 +19,14 @@
 
 <script>
 export default {
-  props: { item: Object },
+  props: { item: Object, dark: { type: Boolean, default: false } },
   methods: {}
 }
 </script>
 
 <style>
 .divline {
+  cursor: pointer;
   position: relative;
   width: 100%;
   /* height: 45px; */

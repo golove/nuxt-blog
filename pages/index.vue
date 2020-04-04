@@ -1,7 +1,12 @@
 <template>
   <v-layout column justify-center align-center>
     <v-col class="py-0" cols="12">
-      <dividline @shuffle="shuffle" @changebadge="changebadge(item)" :item="item"></dividline>
+      <dividline
+        :dark="$vuetify.theme.dark"
+        @shuffle="shuffle"
+        @changebadge="changebadge(item)"
+        :item="item"
+      ></dividline>
     </v-col>
     <v-col>
       <transition-group name="list-complete" tag="div" class="row">
@@ -66,7 +71,7 @@ export default {
       item.badge = false
     },
     shuffle() {
-      this.$store.commit('shuffle', 'article')
+      this.$store.commit('content/shuffle', 'article')
     }
   }
 }
