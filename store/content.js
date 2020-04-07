@@ -3,6 +3,7 @@ export const state = () => ({
     letters2: [],
     avatars: [],
     article: [],
+    noticewords: [],
     article2: [],
     jokes: [],
     news: [],
@@ -77,6 +78,7 @@ function returnFunc(el, str) {
 export const actions = {
     async getdata({ commit }, json) {
         let res = await this.$axios.get(json.api)
+
         if (json.type === 'letters') {
             commit('setdata', { type: 'letters2', data: res })
         }
@@ -87,12 +89,13 @@ export const actions = {
             if (res.data instanceof Array) {
                 commit('setdata', { type: json.type, data: res.data })
             } else {
-                commit('setdata', { type: json.type, data: res.data.list })
+                console.log(res)
+                // commit('setdata', { type: json.type, data: res.data.list })
             }
         }
     },
     requestImg({ commit }) {
-        this.$axios.get(`/api/picture`, {}).then(res => {
+        this.$axios.get(`/picture`, {}).then(res => {
             commit('setdata', { type: 'pictures', data: res })
         })
     },

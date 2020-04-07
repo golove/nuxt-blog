@@ -27,7 +27,7 @@
               v-model="user.pass"
               :rules="passRules"
             />
-            <!-- <div class="d-flex">
+            <div class="d-flex">
               <v-text-field
                 prepend-icon="mdi-refresh"
                 @click:prepend="getVerifycode"
@@ -44,7 +44,7 @@
                 height="35px"
                 :src="this.verifycode.verifyCodeImgUrl"
               ></v-img>
-            </div>-->
+            </div>
 
             <v-checkbox v-model="autoLogin" label="自动登录"></v-checkbox>
             <v-alert dense outlined v-show="alertflag" :type="isSuccess[issuc]">
@@ -91,16 +91,17 @@ export default {
         v => !!v || 'Name is required',
         v => (v && v.length <= 10) || 'Name must be less than 10 characters'
       ],
-      // vcodeRules: [v => !!v || 'verifycode is required', v => this.wharrule(v)],
+      vcodeRules: [v => !!v || 'verifycode is required', v => this.wharrule(v)],
       passRules: [v => !!v || 'Pass is required']
     }
   },
   methods: {
     ...mapActions(['userlogin']),
+    ...mapActions({ getdata: 'content/getdata' }),
     validate() {
       if (this.$refs.form.validate()) {
         this.$axios
-          .post('/api/login', this.user)
+          .post('/login', this.user)
           .then(res => {
             this.alertflag = true
             this.subtitle = res.msg
@@ -120,29 +121,33 @@ export default {
     setCookie() {
       window.document.cookie = 'nihao' + '=' + 'value'
       console.log(window.document.cookie)
-    }
-    // getVerifycode() {
-    //   this.$axios
-    //     .get(
-    //       'http://www.mxnzp.com/api/verifycode/code?len=5&app_id=tguwfpqsppmjnoli&app_secret=cGFyc25Bam80dXFlQ3FlaGtmeS9Kdz09'
-    //     )
-    //     .then(res => {
-    //       this.vCode = ''
-    //       this.verifycode = res.data
-    //     })
-    // },
+    },
+    getVerifycode() {
+      this.$axios
+        .get(
+          'https://www.mxnzp.com/api/verifycode/code?len=5&app_id=tguwfpqsppmjnoli&app_secret=cGFyc25Bam80dXFlQ3FlaGtmeS9Kdz09'
+        )
+        .then(res => {
+          this.vCode = ''
+          this.verifycode = res.data
+          console.log(res)
+        })
+    },
 
-    // wharrule(v) {
-    //   // console.log(v, this.verifycode.verifyCode)
-    //   if (v !== this.verifycode.verifyCode) {
-    //     return '验证码错误请从新输入'
-    //   } else {
-    //     return true
-    //   }
-    // }
+    wharrule(v) {
+      // console.log(v, this.verifycode.verifyCode)
+      if (v !== this.verifycode.verifyCode) {
+        return '验证码错误请从新输入'
+      } else {
+        return true
+      }
+    }
   },
   mounted() {
-    // this.getVerifycode()
+    this.getVerifycode()
+    if (this.$store.state.content.avatars.length === 0) {
+      this.getdata({ api: '/dlavatar', type: 'avatars' })
+    }
   }
 }
 </script>

@@ -204,9 +204,9 @@ export default {
   mounted() {
     setTimeout(this.mucmouseenterfunc, 1500)
     setTimeout(this.mucmouseleavefunc, 2000)
-  },
-  created() {
-    this.getplaylist({ id: '2801005211' })
+    if (this.$store.state.music.songs.length === 0) {
+      this.getplaylist({ id: '2801005211' })
+    }
   }
 }
 </script>

@@ -69,7 +69,7 @@ export default {
         }
 
         this.$axios
-          .post('/api/addArray', { id: this.item._id, reply: msgItem })
+          .post('/addArray', { id: this.item._id, reply: msgItem })
           .then(res => {
             this.msgcontent = ''
             this.articleEdit({ data: msgItem, type: 'reply' })

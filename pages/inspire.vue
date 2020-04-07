@@ -42,6 +42,7 @@
 <script>
 import inputbox from '~/components/inputbox'
 import twittercard from '~/components/twittercard'
+import { mapActions } from 'vuex'
 export default {
   name: 'index',
   components: { twittercard, inputbox },
@@ -51,6 +52,7 @@ export default {
     sliceN: 12
   }),
   methods: {
+    ...mapActions({ getdata: 'content/getdata' }),
     setdata(data) {
       this.blogs.unshift(data)
     },
@@ -61,6 +63,11 @@ export default {
 
     shuffle() {
       this.$store.commit('content/shuffle', 'letters')
+    }
+  },
+  mounted() {
+    if (this.$store.state.content.letters.length === 0) {
+      this.getdata({ api: '/letters', type: 'letters' })
     }
   }
 }

@@ -64,9 +64,8 @@ export default {
       //   this.$store.state.article.unshift(response)
       if (response.blocks.length > 0) {
         this.$axios
-          .post('/api/insert', response)
+          .post('/insert', response)
           .then(res => {
-            console.log(res)
             this.$store.commit('content/pushdata', {
               type: 'article',
               data: res.ops[0]

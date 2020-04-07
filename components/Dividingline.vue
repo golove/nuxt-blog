@@ -1,5 +1,5 @@
 <template>
-  <div @click="$emit('shuffle',item.type)" class="divline align-center">
+  <div class="divline align-center">
     <v-badge
       @click="$emit('changebadge')"
       overlap
@@ -8,7 +8,7 @@
       :value="item.badge"
       :color="item.color"
     >
-      <div class="dividline" :class="dark?'dividline1':'dividline2'">
+      <div  @click.stop="$emit('shuffle')" class="dividline" :class="dark?'dividline1':'dividline2'">
         <v-icon>{{item.icon}}</v-icon>
         {{item.title}}
       </div>

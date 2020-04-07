@@ -36,13 +36,13 @@
       >评论</v-btn>
     </v-card-actions>
 
-    <table width="100%" border="0" cellspacing="10" cellpadding="8">
+    <table  width="100%" border="0" cellspacing="10" cellpadding="8">
       <transition-group name="list-complete" tag="tbody">
         <live-msg
           class="list-complete-item"
-          v-for="(e,i) in item.reply.slice((page-1)*sliceN,sliceN*page)"
+          v-for="(e,i) in item.reply"
           :key="e.time"
-          :n="i+(5*(page-1))"
+         
           :item="e"
         />
       </transition-group>
@@ -57,8 +57,7 @@ export default {
   components: { liveMsg },
   props: {
     item: Object,
-    page: Number,
-    sliceN: Number
+  
   },
   data() {
     return {
@@ -84,7 +83,7 @@ export default {
         }
 
         this.$axios
-          .post('/api/addArrayletters', { id: this.item._id, reply: msgItem })
+          .post('/addArrayletters', { id: this.item._id, reply: msgItem })
           .then(res => {
             this.reply = ''
             this.lettersEdit({ data: msgItem, type: 'reply' })
@@ -121,19 +120,5 @@ export default {
   }
 }
 </script>
-<style scoped>
-.list-complete-item {
-  transition: all 2s;
-  display: inline-block;
-}
-.list-complete-enter, .list-complete-leave-to
-/* .list-complete-leave-active for below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateX(10px);
-}
-.list-complete-leave-active {
-  position: absolute;
-}
-</style>
 
 

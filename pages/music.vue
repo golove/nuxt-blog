@@ -59,7 +59,7 @@ export default {
       this.$router.push('/music/songlist')
     }
   },
-  created() {
+  mounted() {
     // this.newgetMusic('/search?keywords=踏行')
     if (this.$store.state.music.albums.length < 1) {
       this.newgetMusic('/personalized')

@@ -34,7 +34,7 @@ export default {
         })
       }
     } else {
-      let res = await app.$axios.post('/api/searchBlog', { _id: params.id })
+      let res = await app.$axios.post('/searchBlog', { _id: params.id })
       return {
         initData: res[0]
       }

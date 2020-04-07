@@ -18,7 +18,7 @@
       <div class="svgfather">
         <svg
           class="gbsoubadge"
-          :style="{fill:$vuetify.theme.dark?'rgba(90,90,90,1)': 'rgba(233,210,224,.8)'}"
+          :style="{fill:$vuetify.theme.dark?'rgba(90,90,90,1)': 'rgba(233,210,224,.95)'}"
         >
           <use slot="icon" xlink:href="#bg_source_badge" />
         </svg>

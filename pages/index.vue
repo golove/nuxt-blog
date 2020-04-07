@@ -1,10 +1,13 @@
 <template>
   <v-layout column justify-center align-center>
+    <v-col cols="12">
+      <noticeWords @random="shuffle('noticewords')" :items="$store.state.content.noticewords" />
+    </v-col>
     <v-col class="py-0" cols="12">
       <dividline
         :dark="$vuetify.theme.dark"
-        @shuffle="shuffle"
-        @changebadge="changebadge(item)"
+        @shuffle="shuffle('article')"
+        @changebadge="changebadge"
         :item="item"
       ></dividline>
     </v-col>
@@ -45,7 +48,7 @@
 import noticeWords from '../components/noticeWords.vue'
 import dividline from '../components/Dividingline.vue'
 import hCard from '../components/hCard.vue'
-
+import { mapActions } from 'vuex'
 export default {
   components: {
     noticeWords,
@@ -56,6 +59,7 @@ export default {
     return {
       page: 1,
       sliceN: 16,
+
       item: {
         icon: 'mdi-book',
         title: '精品文章',
@@ -67,11 +71,25 @@ export default {
     }
   },
   methods: {
-    changebadge(item) {
-      item.badge = false
+    ...mapActions({ getdata: 'content/getdata' }),
+    changebadge() {
+      this.item.badge = false
+      console.log('ok')
     },
-    shuffle() {
-      this.$store.commit('content/shuffle', 'article')
+    shuffle(type) {
+      this.$store.commit('content/shuffle', type)
+    }
+  },
+  mounted() {
+    if (this.$store.state.content.article.length === 0) {
+      this.getdata({ api: '/myblog', type: 'article' })
+    }
+    if (this.$store.state.content.noticewords.length === 0) {
+      this.getdata({
+        api:
+          'https://www.mxnzp.com/api/daily_word/recommend?count=10&len=5&app_id=tguwfpqsppmjnoli&app_secret=cGFyc25Bam80dXFlQ3FlaGtmeS9Kdz09',
+        type: 'noticewords'
+      })
     }
   }
 }

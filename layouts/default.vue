@@ -271,21 +271,12 @@ export default {
       }
     }
   },
-  created() {
-    if (this.$store.state.content.article.length < 1) {
-      this.getdata({ api: '/api/myblog', type: 'article' })
-    }
-    if (this.$store.state.content.letters.length < 1) {
-      this.getdata({ api: '/api/letters', type: 'letters' })
-    }
-    if (this.$store.state.content.avatars.length < 1) {
-      this.getdata({ api: '/api/dlavatar', type: 'avatars' })
-    }
-
-    let user = window.sessionStorage.getItem('user')
-    if (user) {
-      this.userlogin(JSON.parse(user))
-    }
+  mounted() {
+      let u = JSON.parse(window.sessionStorage.getItem('user'))
+      if(u){
+          this.userlogin(u);
+      }
+    
   }
 }
 </script>

@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .msgbox {
   background: orange;
   padding: 0px 8px;

@@ -111,22 +111,13 @@
       :height="maxheight"
       :color="item.color"
       :dark="!item.tcolor"
-      class="card2 overflow-hidden"
+      class="card2 overflowstyle"
       :class="flag?'card2_1':''"
       shaped
     >
-      <msgboard @backmsg="backmsg" :sliceN="sliceN" :page="page" :item="item" />
-      <v-pagination
-        class="paginatsss"
-        v-if="Math.ceil(item.reply.length/sliceN)>1&&item.reply"
-        light
-        circle
-        v-model="page"
-        :length="Math.ceil(item.reply.length/sliceN)"
-        prev-icon="mdi-menu-left"
-        next-icon="mdi-menu-right"
-      ></v-pagination>
-      <!-- <simplereply @backmsg="backmsg" :item="item" /> -->
+      <msgboard @backmsg="backmsg"  :item="item" />
+
+    
     </v-card>
   </div>
 </template>
@@ -142,9 +133,9 @@ export default {
   data() {
     return {
       tflag: false,
-      page: 1,
+     
       time: '',
-      sliceN: 8,
+     
       flag: false,
       maxheight: '250px',
       menulists: [{ title: '删除', func: this.remove }]
@@ -231,7 +222,7 @@ export default {
 
 .card2 {
   top: 0;
-
+    overflow: scroll;
   position: absolute;
   transform: rotateY(180deg);
 }

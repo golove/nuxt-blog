@@ -1,7 +1,7 @@
 const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
-  mode: 'spa',
+  mode: 'universal',
   /*
   ** Headers of the page
   */
@@ -56,11 +56,12 @@ module.exports = {
   ],
   proxy: {
     '/api': {
-      target: 'http://localhost:3000',
-      changeOrigin: true,
+      target: 'http://39.105.168.171:80',
       pathRewrite: {
-        '^/api': ''
-      },
+        '^/api/': '/',
+        changeOrigin: true
+      }
+
 
     }
   },
@@ -69,8 +70,14 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: "http://localhost:3000",//"http://39.105.168.171",
+    baseURL: "http:39.105.168.171",//"http://39.105.168.171",127.0.0.1:3000
+    prefix: '/api/',
+    proxy: true,
     credentials: true,
+  },
+  server: {
+    port: 8000, // default: 3000
+    host: '0.0.0.0', // default: localhost
   },
   /*
   ** vuetify module configuration
@@ -104,6 +111,7 @@ module.exports = {
       }
     }
   },
+
   /*
   ** Build configuration
   */
