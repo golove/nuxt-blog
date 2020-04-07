@@ -75,36 +75,29 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
 }
-/* list-complete-item */
-.list-complete-item {
-  max-width: 625px;
-  transition: all 1.6s;
-  display: inline-block;
-}
-.list-complete-enter, .list-complete-leave-to
-/* .list-complete-leave-active for below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateX(10px);
-}
-.list-complete-leave-active {
-  position: absolute;
-}
 
 .groupstyle {
   position: relative;
 }
-.left-enter,
-.left-leave-to {
-  opacity: 0;
-  transform: translateX(90px);
-}
-
-.left-enter-active,
-.left-leave-active {
-  transition: all 0.6s;
-}
 
 .alsdjflajs {
   min-height: 90vh;
+}
+.list-complete-item {
+  max-width: 625px;
+  transition: all 1.2s;
+}
+
+.list-complete-enter,
+.list-complete-leave-to
+
+/* .list-complete-leave-active for below version 2.1.8 */
+ {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.list-complete-leave-active {
+  position: absolute;
 }
 </style>

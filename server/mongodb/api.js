@@ -8,12 +8,15 @@ const router = new Router({
 })
 
 router //bolgcontent
-  .get('/myblog', async ctx => {
-    // let pageSize = 10
-    // let page = ctx.request.query.pa ge ? parseInt(ctx.request.query.page) : 1
-    // let skip = (page - 1) * pageSize
+  .get('/myblog', async (ctx) => {
+
+    let res = await DB.find('mynewblog', ctx.request.body);
+    // console.log(ctx.request.body)
+    ctx.body = res
+  })
+  .post('/searchBlog', async (ctx) => {
     let json = {}
-    console.log(ctx.request.body)
+
     if (ctx.request.body._id) {
       json = {
         _id: DB.setObjectId(ctx.request.body._id)
@@ -25,6 +28,7 @@ router //bolgcontent
     // console.log(ctx.request.body)
     ctx.body = res
   })
+
 
   .post('/insert', async ctx => {
     let res = await DB.insert('mynewblog', ctx.request.body);
@@ -141,7 +145,6 @@ router //bolgcontent
   // 请求头像数据
   .get('/dlavatar', async ctx => {
     let res = await DB.find('avatar', ctx.request.body);
-    console.log(res)
     ctx.body = res
 
   })
@@ -257,7 +260,24 @@ router //bolgcontent
   })
 
 
-  // 用户登录注册api
+// 用户登录注册api
+
+
+// 退出登录
+router.get('/exit', async (ctx) => {
+  await ctx.logout()
+  if (!ctx.isAuthenticated()) {
+    ctx.body = {
+      status: 200,
+      msg: '退出登录'
+    }
+  } else {
+    ctx.body = {
+      code: -1
+    }
+  }
+})
+
 
   .get('/getUser', async (ctx) => {
     // 判断用户是否登录，Passport内置的
@@ -278,6 +298,53 @@ router //bolgcontent
     }
 
   })
+
+  .post('/login', ctx => {
+    // 调用策略
+    return Passport.authenticate('local', (err, user, info, status) => {
+      if (err) {
+        console.log(err)
+        ctx.body = {
+          status: -1,
+          msg: err
+        }
+      } else {
+        if (user) {
+
+
+          ctx.body = {
+            status: 200,
+            msg: '登录成功',
+            data: {
+              "name": user.name,
+              "id": user._id,
+              "email": user.email,
+              "avatar": user.avatar,
+              "delflag": user.delflag,
+              "tel": user.tel,
+              "time": user.createdate,
+              "gender": user.gender,
+              "age": user.age,
+              "signature": user.signature,
+            },
+          }
+          return ctx.login(user)
+        } else {
+          console.log(info)
+          ctx.body = {
+            status: 1,
+            msg: info
+          }
+        }
+      }
+    })(ctx)
+  })
+
+
+
+
+
+
   // 注册
 
   .post('/signup', async (ctx) => {
@@ -332,9 +399,7 @@ router //bolgcontent
   // 登录
   .post('/signin', async (ctx) => {
     let res = await DB.find('users', ctx.request.body);
-    console.log(ctx.request.body)
     try {
-
       ctx.body = {
         status: 200,
         data: {
@@ -351,7 +416,6 @@ router //bolgcontent
         },
         msg: '登录成功'
       }
-
     } catch (error) {
       ctx.body = {
         status: 0,
@@ -383,49 +447,6 @@ router //bolgcontent
     console.log(ctx)
   })
 
-// 本地登录
-// return Passport.authenticate('local', function (err, user, info, status) {
-//   if (err) {
-//     ctx.body = {
-//       status: -1,
-//       msg: err
-//     }
-//   } else {
-//     if (user) {
-//       ctx.body = {
-//         status: 200,
-//         msg: '登录成功',
-//         user: {
-//           userName: user.userName,
-//           email: user.userPwd
-//         }
-//       }
-//       // Passport中间件带的ctx.login
-//       return ctx.login(user)
-//     } else {
-//       ctx.body = {
-//         status: 0,
-//         msg: info
-//       }
-//     }
-//   }
-// })(ctx, next)
-// })
-
-// 退出登录
-router.get('/exit', async (ctx) => {
-  await ctx.logout()
-  if (!ctx.isAuthenticated()) {
-    ctx.body = {
-      status: 200,
-      msg: '退出登录'
-    }
-  } else {
-    ctx.body = {
-      code: -1
-    }
-  }
-})
 
   // picture服务端api
   // picture 数据库查询 api

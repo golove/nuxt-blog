@@ -36,15 +36,17 @@
       >评论</v-btn>
     </v-card-actions>
 
-    <transition-group name="list-complete" tag="ul">
-      <live-msg
-        class="list-complete-item"
-        v-for="(e,i) in item.reply.slice((page-1)*5,5*page)"
-        :key="e.time"
-        :n="i+(5*(page-1))"
-        :item="e"
-      />
-    </transition-group>
+    <table width="100%" border="0" cellspacing="10" cellpadding="8">
+      <transition-group name="list-complete" tag="tbody">
+        <live-msg
+          class="list-complete-item"
+          v-for="(e,i) in item.reply.slice((page-1)*sliceN,sliceN*page)"
+          :key="e.time"
+          :n="i+(5*(page-1))"
+          :item="e"
+        />
+      </transition-group>
+    </table>
   </v-card>
 </template>
 
@@ -55,7 +57,8 @@ export default {
   components: { liveMsg },
   props: {
     item: Object,
-    page: Number
+    page: Number,
+    sliceN: Number
   },
   data() {
     return {

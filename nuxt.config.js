@@ -6,7 +6,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
+
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
@@ -17,7 +17,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [{ src: "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js" },
-    { src: "https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js" },
+    { src: "https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js" }
     ]
   },
   /*
@@ -28,6 +28,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    '~assets/style.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -50,13 +51,26 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
+    'cookie-universal-nuxt',
   ],
+  proxy: {
+    '/api': {
+      target: 'http://localhost:3000',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api': ''
+      },
+
+    }
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: "http://39.105.168.171",
+    baseURL: "http://localhost:3000",//"http://39.105.168.171",
+    credentials: true,
   },
   /*
   ** vuetify module configuration

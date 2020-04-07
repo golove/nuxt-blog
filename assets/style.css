@@ -1,0 +1,17 @@
+.list-complete-item {
+  /* max-width: 625px; */
+  transition: all 1.2s;
+}
+
+.list-complete-enter,
+.list-complete-leave-to
+
+/* .list-complete-leave-active for below version 2.1.8 */
+  {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.list-complete-leave-active {
+  position: absolute;
+}

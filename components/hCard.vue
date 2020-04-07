@@ -1,11 +1,11 @@
 <template>
   <v-hover v-slot:default="{hover}" open-delay="100">
-    <v-card @click="showDetail" max-width="100%">
+    <v-card color="rgba(255,255,255,.3)" @click="showDetail" max-width="100%">
       <v-img
         class="white--text align-end"
         width="auto"
         height="159px"
-        :src="imageBlocks[0]?imageBlocks[0].data.file.url:'https://i.loli.net/2019/11/03/ShRIkmuvKeCBLgE.jpg'"
+        :src="imageBlocks[0]?imageBlocks[0].data.file.url:'http://39.105.168.171:8090/image/image-1584819051368.jpg'"
       >
         <v-expand-transition>
           <div
@@ -16,7 +16,10 @@
         </v-expand-transition>
       </v-img>
       <div class="svgfather">
-        <svg class="gbsoubadge" :style="{fill:$vuetify.theme.dark?'#1E1E1E': 'white'}">
+        <svg
+          class="gbsoubadge"
+          :style="{fill:$vuetify.theme.dark?'rgba(90,90,90,1)': 'rgba(233,210,224,.8)'}"
+        >
           <use slot="icon" xlink:href="#bg_source_badge" />
         </svg>
         <v-avatar class="avatar" size="30">
@@ -78,10 +81,7 @@
         <symbol viewBox="0 0 76 31" id="bg_source_badge">
           <title>bg_source_badge</title>
           <path
-            class="st0"
-            d="M57.7,11.4c-1.4-1.4-2.7-2.9-4.1-4.4c-0.2-0.3-0.5-0.5-0.8-0.8c-0.2-0.2-0.3-0.3-0.5-0.5l0,0
-	C48.6,2.2,43.5,0,38,0S27.4,2.2,23.6,5.7l0,0c-0.2,0.2-0.3,0.3-0.5,0.5c-0.3,0.3-0.5,0.5-0.8,0.8c-1.4,1.5-2.7,3-4.1,4.4
-	c-5,5.1-11.7,6.1-18.3,6.3V31h9.4h8.9h39.4h4.9H76V17.6C69.4,17.4,62.7,16.5,57.7,11.4z"
+            d="M57.8,11.4C56.4,10,55.1,8.5,53.7,7a6,6,0,0,0-.8-.8l-.5-.5h0A20.89,20.89,0,0,0,38.1,0,21.33,21.33,0,0,0,23.7,5.7h0l-.5.5-.8.8c-1.4,1.5-2.7,3-4.1,4.4-5,5.1-11.7,6.1-18.3,6.3l76.1-.1C69.5,17.4,62.8,16.5,57.8,11.4Z"
           />
         </symbol>
       </svg>
@@ -94,6 +94,7 @@
 
 <script>
 import action from '~/components/actions.vue'
+
 import { mapMutations } from 'vuex'
 export default {
   name: 'hCard',
@@ -109,7 +110,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      articleEdit: 'content/articleEdit',
+      articleEdit: 'articleEdit',
       removed: 'content/remove'
     }),
     showDetail() {

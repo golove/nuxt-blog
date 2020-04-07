@@ -218,6 +218,7 @@ export default {
   position: fixed;
   overflow: hidden;
   animation-name: cycle;
+  background: white;
   animation-duration: 240s;
   animation-iteration-count: 1;
 }
@@ -251,12 +252,10 @@ p {
     200% 100% at bottom center,
     rgba(247, 247, 182, 0.6),
     rgba(233, 111, 146, 0.6),
-    rgba(117, 81, 125, 0.6),
-    rgba(43, 60, 97, 0.6)
+    rgba(117, 81, 125, 0.6)
   );
   background: radial-gradient(
     220% 105% at top center,
-    rgba(28, 42, 73, 0.6) 1%,
     rgba(117, 81, 125, 0.6) 40%,
     rgba(233, 111, 146, 0.6) 65%,
     rgba(247, 247, 182, 0.6)
@@ -265,7 +264,7 @@ p {
 }
 .playButton {
   position: absolute;
-  background: rgba(254, 254, 255, 0.5);
+
   z-index: 9;
   transition: all 0.3s ease;
 }
@@ -276,25 +275,33 @@ p {
   padding: 8px;
   height: 55px;
 }
+.abstyle {
+  background: rgba(254, 254, 255, 1);
+}
 .abstyle:nth-child(1) {
   margin-left: 40px;
+  background: rgba(254, 254, 255, 0.5);
 }
 .abstyle:nth-child(2) {
   margin-left: 80px;
+  background: rgba(254, 254, 255, 0.5);
 }
 .abstyle:nth-child(3) {
   margin-left: 120px;
+  background: rgba(254, 254, 255, 0.5);
 }
 .abstyle:nth-child(4) {
   margin-left: 160px;
+  background: rgba(254, 254, 255, 0.5);
 }
 
 .restyle {
   margin: 0;
+  background: rgba(254, 254, 255, 0.5);
 }
-.restyle:nth-child(4) {
+/* .restyle:nth-child(4) {
   transform: rotate(45deg);
-}
+} */
 .liststyle {
   width: 100%;
   transition: height 0.9s ease;

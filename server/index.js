@@ -27,6 +27,8 @@ app.use(passport.initialize())
 
 app.use(passport.session())
 
+app.keys = ['xiaofeiiloveyou']
+
 //配置session中间件
 app.use(session({
   key: 'fin',

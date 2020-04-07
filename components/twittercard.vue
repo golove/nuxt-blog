@@ -18,7 +18,7 @@
       ref="cHeight"
       shaped
     >
-      <v-toolbar flat :color="item.color">
+      <v-toolbar flat color="transparent">
         <v-avatar size="42" color="grey darken-3">
           <v-img class="elevation-6" :src="item.avatar"></v-img>
         </v-avatar>
@@ -26,7 +26,7 @@
         <v-spacer></v-spacer>
         <v-menu transition="slide-y-transition" :dark="!item.tcolor" offset-y>
           <template v-slot:activator="{ on }">
-            <v-btn icon dark v-on="on">
+            <v-btn icon v-on="on">
               <v-icon>mdi-dots-horizontal</v-icon>
             </v-btn>
           </template>
@@ -47,7 +47,7 @@
       >{{item.text}}</v-card-text>
       <v-card-text class="pl-12 pr-6 py-0" style="opacity:.6">
         <b style="opacity: 0.6;
-  font-size: 1em;">{{new Date(item.time).toLocaleString()}}</b>
+  font-size: 1em;">{{time}}</b>
       </v-card-text>
       <v-card-actions class="justify-space-around" style="opacity:0.7">
         <v-btn @click="addlike" icon>
@@ -115,7 +115,7 @@
       :class="flag?'card2_1':''"
       shaped
     >
-      <msgboard @backmsg="backmsg" :page="page" :item="item" />
+      <msgboard @backmsg="backmsg" :sliceN="sliceN" :page="page" :item="item" />
       <v-pagination
         class="paginatsss"
         v-if="Math.ceil(item.reply.length/sliceN)>1&&item.reply"
@@ -133,7 +133,7 @@
 
 <script>
 import msgboard from '~/components/msgBoardTwitter.vue'
-// import simplereply from '~/components/simpleReply.vue'
+import timeago from '../static/timeago.js'
 import { mapMutations } from 'vuex'
 export default {
   name: 'twittercard',
@@ -143,7 +143,8 @@ export default {
     return {
       tflag: false,
       page: 1,
-      sliceN: 9,
+      time: '',
+      sliceN: 8,
       flag: false,
       maxheight: '250px',
       menulists: [{ title: '删除', func: this.remove }]
@@ -152,7 +153,7 @@ export default {
 
   methods: {
     ...mapMutations({
-      lettersEdit: 'content/lettersEdit',
+      lettersEdit: 'lettersEdit',
       removed: 'content/remove'
     }),
     swipe(direction) {},
@@ -203,6 +204,9 @@ export default {
       this.tflag = !this.tflag
     },
     addmsg() {}
+  },
+  mounted() {
+    this.time = timeago(this.item.time)
   }
 }
 </script>

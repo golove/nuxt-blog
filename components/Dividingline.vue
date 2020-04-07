@@ -47,6 +47,6 @@ export default {
   color: white;
 }
 .dividline2 {
-  background-color: white;
+  background-color: rgb(255, 255, 255, 0.6);
 }
 </style>

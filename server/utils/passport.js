@@ -2,20 +2,21 @@ const passport = require('koa-passport')
 const LocalStrategy = require('passport-local')
 const DB = require('../mongodb/mongodb');
 
-// 提交数据(策略)
+// 提交数据(策略)用户名密码验证
 passport.use(new LocalStrategy({
-  usernameField: 'userName',
-  passwordField: 'userPwd'
-}, async function (username, password, done) {
+  usernameField: 'name',
+  passwordField: 'pass'
+}, async function (name, pass, done) {
   let where = {
-    userName: username
+    name: name
   };
   let result = await DB.find('users', where)
+  // console.log(result[0], name, pass)
   if (result != null) {
-    if (result.userPwd === password) {
-      return done(null, result)
+    if (result[0].pass === pass) {
+      return done(null, result[0])
     } else {
-      return done(null, false, '密码错误')
+      return done(null, false, '密码错误!!!')
     }
   } else {
     return done(null, false, '用户不存在')

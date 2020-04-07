@@ -67,7 +67,7 @@ export default {
           .post('/api/insert', response)
           .then(res => {
             console.log(res)
-            this.$store.commit('pushdata', {
+            this.$store.commit('content/pushdata', {
               type: 'article',
               data: res.ops[0]
             })
@@ -90,6 +90,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

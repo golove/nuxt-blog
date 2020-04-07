@@ -1,6 +1,6 @@
 <template>
   <v-card shaped class="card6 mx-auto" :color="item.color" :dark="!item.tcolor">
-    <v-toolbar flat :color="item.color">
+    <v-toolbar flat color="transparent">
       <v-avatar size="42" color="grey darken-3">
         <v-img
           class="elevation-6"
@@ -27,7 +27,7 @@
       label="文字最多300字,图片暂不支持!"
       hint="文字最多300字,图片暂不支持!"
       counter
-      :background-color="item.color"
+      background-color="transparent"
       name="blog"
       solo
       flat
@@ -117,5 +117,28 @@ export default {
 .card6 {
   width: 100%;
   opacity: 0.8;
+}
+
+/*滚动条样式*/
+#input-90::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  cursor: pointer;
+  width: 8px;
+  /*高宽分别对应横竖滚动条的尺寸*/
+  height: 0px;
+}
+
+#input-90::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 5px;
+  box-shadow: inset 0 0 5px rgba(230, 203, 233, 0.8);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+#input-90::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  box-shadow: inset 0 0 5px rgba(223, 206, 235, 0.2);
+  border-radius: 5px;
+  background: rgba(234, 204, 235, 0.1);
 }
 </style>

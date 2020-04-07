@@ -3,6 +3,7 @@ export default function ({
     redirect
 }) {
     $axios.onRequest(config => {
+
         console.log('Making request to ' + config.url)
     })
     $axios.onResponse(response => {

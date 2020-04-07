@@ -2,7 +2,7 @@
   <v-card-actions style="opacity:0.5">
     <v-btn class="ma-0" text>
       <v-icon small>mdi-clock-outline</v-icon>
-      {{new Date(item.time).toLocaleDateString()}}
+      {{time}}
     </v-btn>
     <!-- <v-spacer></v-spacer> -->
     <v-btn :disabled="disabled" @click.stop="addLike" icon>
@@ -36,13 +36,14 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import timeago from '../static/timeago.js'
 export default {
   props: { item: {}, flag: Boolean, disabled: Boolean },
   data() {
-    return {}
+    return { time: '' }
   },
   methods: {
-    ...mapMutations({ articleEdit: 'content/articleEdit' }),
+    ...mapMutations({ articleEdit: 'articleEdit' }),
     addLike() {
       if (this.$store.state.user.name) {
         this.articleEdit({ data: this.item, type: 'like' })
@@ -57,6 +58,9 @@ export default {
         alert('make sure you already login!')
       }
     }
+  },
+  mounted() {
+    this.time = timeago(this.item.time)
   }
 }
 </script>

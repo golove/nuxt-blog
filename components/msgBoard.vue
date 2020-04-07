@@ -22,21 +22,17 @@
       </v-list-item-content>
     </v-list-item>
 
-    <v-list color="transparent">
-      <!-- <transition-group appear> -->
-      <!-- <template v-for="(e,i) in item.reply">
-          
-          <v-divider  :key="i" inset></v-divider>
-      </template>-->
-      <template v-for="(e) in item.reply">
-        <v-list-item :key="e._id">
-          <live-msg :item="e" :key="e._id" />
-        </v-list-item>
-      </template>
-      <!-- </transition-group> -->
-    </v-list>
-
-    <div class="msgfooter"></div>
+    <table width="100%" border="0" cellspacing="15" cellpadding="8">
+      <thead>
+        <tr class="etdstyle">
+          <th class="text-left" style="width:30px;margin:8px"></th>
+          <th class="text-left" style="margin:8px"></th>
+        </tr>
+      </thead>
+      <transition-group name="list-complete" tag="tbody">
+        <live-msg class="list-complete-item" v-for="(e) in item.reply" :key="e.time" :item="e" />
+      </transition-group>
+    </table>
   </v-card>
 </template>
 
@@ -46,7 +42,8 @@ import liveMsg from './liveMsg'
 export default {
   components: { liveMsg },
   props: {
-    item: Object
+    item: Object,
+    page: Number
   },
   data() {
     return {
@@ -64,10 +61,10 @@ export default {
         let msgItem = {
           articleId: this.item._id,
           userId: this.$store.state.user._id,
-          userImg: this.$store.state.user.imgsrc,
+          avatar: this.$store.state.user.avatar,
           name: this.$store.state.user.name,
           time: Date.parse(date),
-          msg: this.msgcontent.trim(),
+          reply: this.msgcontent.trim(),
           like: 0
         }
 
@@ -109,5 +106,3 @@ export default {
   }
 }
 </script>
-
-

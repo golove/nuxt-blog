@@ -45,6 +45,8 @@
                 :src="this.verifycode.verifyCodeImgUrl"
               ></v-img>
             </div>-->
+
+            <v-checkbox v-model="autoLogin" label="自动登录"></v-checkbox>
             <v-alert dense outlined v-show="alertflag" :type="isSuccess[issuc]">
               {{
               subtitle
@@ -57,6 +59,7 @@
           <v-btn color="primary" to="/">取消</v-btn>
           <v-btn color="primary" to="/signup">没有账号?注册</v-btn>
           <v-btn :disabled="!valid" @click="validate" color="primary">登录</v-btn>
+          <!-- <v-btn @click="setCookie">cookies</v-btn> -->
         </v-card-actions>
       </v-card>
     </v-col>
@@ -70,7 +73,8 @@ export default {
   data() {
     return {
       vCode: '',
-      // verifycode: {},
+      autoLogin: false,
+      verifycode: {},
       subtitle: '',
       alertflag: false,
       issuc: false,
@@ -96,10 +100,10 @@ export default {
     validate() {
       if (this.$refs.form.validate()) {
         this.$axios
-          .post('/api/signin', this.user)
+          .post('/api/login', this.user)
           .then(res => {
-            console.log(res)
-            ;(this.alertflag = true), (this.subtitle = res.msg)
+            this.alertflag = true
+            this.subtitle = res.msg
             if (res.status === 200) {
               this.issuc = true
               this.userlogin(res.data)
@@ -112,6 +116,10 @@ export default {
             console.log(err)
           })
       }
+    },
+    setCookie() {
+      window.document.cookie = 'nihao' + '=' + 'value'
+      console.log(window.document.cookie)
     }
     // getVerifycode() {
     //   this.$axios
@@ -132,10 +140,10 @@ export default {
     //     return true
     //   }
     // }
+  },
+  mounted() {
+    // this.getVerifycode()
   }
-  // mounted() {
-  //   this.getVerifycode()
-  // }
 }
 </script>
 <style >
