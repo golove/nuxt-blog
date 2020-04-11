@@ -46,7 +46,7 @@
               @click:append="show1 = !show1"
               prepend-icon="mdi-lock"
             />
-             <div class="d-flex">
+            <div class="d-flex">
               <v-text-field
                 prepend-icon="mdi-refresh"
                 @click:prepend="getVerifycode"
@@ -112,6 +112,7 @@
 </template>
 
 <script>
+import CryptoJS from 'crypto-js'
 import useravatar from '~/components/useravatar.vue'
 import { mapActions } from 'vuex'
 export default {
@@ -123,8 +124,8 @@ export default {
         { gender: '男', color: 'cyan' },
         { gender: '女', color: 'red' }
       ],
-       vCode: '',
-       verifycode: {},
+      vCode: '',
+      verifycode: {},
       tempurls: [],
       show2: false,
       avatarflag: false,
@@ -162,8 +163,7 @@ export default {
         v => !!v || 'password is required',
         v => (v && v.length > 5) || 'password must be more than 5 characters'
       ],
-       vcodeRules: [v => !!v || 'verifycode is required', v => this.wharrule(v)],
-      
+      vcodeRules: [v => !!v || 'verifycode is required', v => this.wharrule(v)],
 
       telRules: [
         v => !!v || 'tel is required',
@@ -173,9 +173,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getdata', 'userexit', 'userlogin']),
+    ...mapActions({ getdata: 'content/getdata', userlogin: 'userlogin' }),
     validate() {
       if (this.$refs.form.validate()) {
+        this.user.pass = CryptoJS.MD5(this.user.pass).toString()
         this.$axios
           .post('/signup', this.user)
           .then(res => {
@@ -183,7 +184,7 @@ export default {
             this.subtitle = res.msg
             if (res.status === 200) {
               this.issuc = true
-              this.$store.commit('USERLOGIN', res.data)
+              this.userlogin(res.data)
               setTimeout(() => {
                 // this.$router.push({ path: "/" });
                 // this.$router.go(-1)
@@ -196,36 +197,39 @@ export default {
           })
       }
     },
-     getVerifycode() {
-       this.$axios
-         .get(
-           'https://www.mxnzp.com/api/verifycode/code?len=5&app_id=tguwfpqsppmjnoli&app_secret=cGFyc25Bam80dXFlQ3FlaGtmeS9Kdz09'
-         )
-         .then(res => {
-           this.vCode = ''
-           this.verifycode = res.data
-         })
-     },
+    getVerifycode() {
+      this.$axios
+        .get(
+          'https://www.mxnzp.com/api/verifycode/code?len=5&app_id=tguwfpqsppmjnoli&app_secret=cGFyc25Bam80dXFlQ3FlaGtmeS9Kdz09'
+        )
+        .then(res => {
+          this.vCode = ''
+          this.verifycode = res.data
+        })
+    },
     imgsrcicon(e) {
       this.user.avatar = e.url
       // console.log(this.user.imgsrc)
     },
-     wharrule(v) {
-       // console.log(v, this.verifycode.verifyCode)
-       if (v !== this.verifycode.verifyCode) {
-         return '验证码错误请从新输入'
-       } else {
-         return true
-       }
-     }
+    wharrule(v) {
+      // console.log(v, this.verifycode.verifyCode)
+      if (v !== this.verifycode.verifyCode) {
+        return '验证码错误请从新输入'
+      } else {
+        return true
+      }
+    }
   },
-   mounted() {
-     this.getVerifycode()
-   }
+  mounted() {
+    this.getVerifycode()
+    if (this.$store.state.content.avatars.length === 0) {
+      this.getdata({ api: '/dlavatar', type: 'avatars' })
+    }
+  }
 }
 </script>
 <style>
 .rowstyle {
-  height: 91vh;
+  min-height: 91vh;
 }
 </style>

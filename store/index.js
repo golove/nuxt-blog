@@ -110,8 +110,13 @@ export const actions = {
   // user exit
   userexit({
     commit
-  }, data) {
+  }) {
     commit('USEREXIT');
+    this.$axios.get("/exit").then(res => {
+      if (res.status == 200) {
+        this.$router.push({ path: '/' });
+      }
+    });
   },
 
 }

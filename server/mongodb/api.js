@@ -281,14 +281,22 @@ router.get('/exit', async (ctx) => {
 
   .get('/getUser', async (ctx) => {
     // 判断用户是否登录，Passport内置的
+
     if (ctx.isAuthenticated()) {
       const {
+        _id,
         name,
-        email
+        email,
+        signature,
+        avatar
       } = ctx.session.passport.user
+
       ctx.body = {
+        id: _id,
         name,
-        email
+        email,
+        signature,
+        avatar
       }
     } else {
       ctx.body = {
@@ -299,8 +307,7 @@ router.get('/exit', async (ctx) => {
 
   })
 
-  .post('/login', ctx => {
-    // 调用策略
+  .post('/login', (ctx, next) => {
     return Passport.authenticate('local', (err, user, info, status) => {
       if (err) {
         console.log(err)
@@ -310,8 +317,6 @@ router.get('/exit', async (ctx) => {
         }
       } else {
         if (user) {
-
-
           ctx.body = {
             status: 200,
             msg: '登录成功',
@@ -337,7 +342,7 @@ router.get('/exit', async (ctx) => {
           }
         }
       }
-    })(ctx)
+    })(ctx, next)
   })
 
 

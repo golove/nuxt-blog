@@ -11,8 +11,8 @@ passport.use(new LocalStrategy({
     name: name
   };
   let result = await DB.find('users', where)
-  // console.log(result[0], name, pass)
-  if (result != null) {
+  // console.log(result, name, pass)
+  if (result.length !== 0) {
     if (result[0].pass === pass) {
       return done(null, result[0])
     } else {

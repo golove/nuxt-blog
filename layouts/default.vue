@@ -1,7 +1,7 @@
 <template>
   <v-app :class="gray?'graystyle':''">
     <v-navigation-drawer
-      color="rgba(255, 255, 255, 0.1)"
+      :color="$vuetify.theme.dark?'#272727':'#F0E5ED'"
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="cliped"
@@ -82,7 +82,13 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="rgba(255,255,255,.6)" dense :clipped-left="cliped" :fixed="fixed" app>
+    <v-app-bar
+      :color="$vuetify.theme.dark?'#232323':'rgba(240,229,237,.98)'"
+      dense
+      :clipped-left="cliped"
+      :fixed="fixed"
+      app
+    >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-spacer></v-spacer>
       <v-toolbar-title @click="toHome">
@@ -138,15 +144,15 @@
 
     <v-content :class="$vuetify.theme.dark?'':'backgroundstylecolor'">
       <musicplayer />
-      <v-container>
-        <transition name="list-complete">
-          <search-result
-            class="list-complete-item"
-            @closeflag="changeFlag"
-            v-if="$store.state.content.searchflag"
-            :searchData="$store.state.content.searchData"
-          />
-        </transition>
+      <transition name="list-complete">
+        <search-result
+          class="list-complete-item"
+          @closeflag="changeFlag"
+          v-if="$store.state.content.searchflag"
+          :searchData="$store.state.content.searchData"
+        />
+      </transition>
+      <v-container :class="$store.state.content.searchflag?'searchblur':''">
         <nuxt />
       </v-container>
     </v-content>
@@ -207,7 +213,8 @@ export default {
       userexit: 'userexit',
       userlogin: 'userlogin',
       getdata: 'content/getdata',
-      reqMusic: 'music/reqMusic'
+      reqMusic: 'music/reqMusic',
+      getUser: 'getUser'
     }),
     // ...mapMutations(['setdata', 'searchFunc', 'searchMsgFunc']),
     ...mapMutations({
@@ -271,12 +278,9 @@ export default {
       }
     }
   },
-  mounted() {
-      let u = JSON.parse(window.sessionStorage.getItem('user'))
-      if(u){
-          this.userlogin(u);
-      }
-    
+  async mounted() {
+    let res = await this.$axios.get('/getUser')
+    this.userlogin(res)
   }
 }
 </script>
@@ -304,6 +308,13 @@ export default {
   top: 500px;
   left: 30px;
   z-index: 999;
+}
+.searchblur {
+  -webkit-filter: blur(55px);
+  -moz-filter: blur(55px);
+  -ms-filter: blur(55px);
+  -o-filter: blur(55px);
+  filter: blur(55px);
 }
 
 .graystyle {

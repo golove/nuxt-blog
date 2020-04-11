@@ -1,6 +1,6 @@
 <template>
   <v-hover v-slot:default="{hover}" open-delay="100">
-    <v-card color="rgba(255,255,255,.3)" @click="showDetail" max-width="100%">
+    <v-card :color="$vuetify.theme.dark?'#5A5A5A':'#F0E5ED'" @click="showDetail" max-width="100%">
       <v-img
         class="white--text align-end"
         width="auto"
@@ -16,10 +16,7 @@
         </v-expand-transition>
       </v-img>
       <div class="svgfather">
-        <svg
-          class="gbsoubadge"
-          :style="{fill:$vuetify.theme.dark?'rgba(90,90,90,1)': 'rgba(233,210,224,.95)'}"
-        >
+        <svg class="gbsoubadge" :style="{fill:$vuetify.theme.dark?'#5A5A5A': '#F0E5ED'}">
           <use slot="icon" xlink:href="#bg_source_badge" />
         </svg>
         <v-avatar class="avatar" size="30">

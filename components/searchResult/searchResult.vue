@@ -1,32 +1,34 @@
 <template>
   <v-row class="searesult" justify="center">
     <v-col sm="12" md="12" lg="9" xl="7">
-      <v-card class="mx-auto" color="cyan">
-        <v-toolbar color="cyan" dense>
-          <v-toolbar-title>{{`搜索到${convert(searchData.length)}条结果`}}</v-toolbar-title>
+      <v-card
+        flat
+        class="mx-auto"
+        :color="$vuetify.theme.dark?'rgba(32,32,32,0.5)':'rgba(255,255,255,0.3)'"
+      >
+        <v-toolbar :color="$vuetify.theme.dark?'rgba(32,32,32,0.2)':'rgba(255,255,255,0.3)'" dense>
+          <v-toolbar-title v-if="searchData.length>0">{{`搜索到${convert(searchData.length)}条相关结果`}}</v-toolbar-title>
+          <v-toolbar-title v-else>{{`没有找到任何数据呢`}}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon @click="$emit('closeflag')">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-row justify="center">
-          <v-col>
-            <transition-group name="list-complete" tag="div" class="row">
-              <v-col
-                class="list-complete-item"
-                :key="item._id"
-                v-for="(item,index) in searchData"
-                lg="3"
-                xl="3"
-                md="3"
-                sm="4"
-                xs="6"
-              >
-                <h-card :n="index " :item="item"></h-card>
-              </v-col>
-            </transition-group>
+
+        <transition-group justify="center" name="list-complete" tag="div" class="row">
+          <v-col
+            class="list-complete-item"
+            :key="item._id"
+            v-for="(item,index) in searchData"
+            lg="3"
+            xl="3"
+            md="3"
+            sm="4"
+            xs="6"
+          >
+            <h-card :n="index " :item="item"></h-card>
           </v-col>
-        </v-row>
+        </transition-group>
       </v-card>
     </v-col>
   </v-row>

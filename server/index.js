@@ -19,21 +19,17 @@ app.use(cors());
 
 
 
-//配置bodyparser的中间件
-app.use(bodyParser());
 
 
-app.use(passport.initialize())
 
-app.use(passport.session())
+
 
 app.keys = ['xiaofeiiloveyou']
-
 //配置session中间件
 app.use(session({
   key: 'fin',
   prefix: 'fin:uid',
-  maxAge: 1000,
+  maxAge: 86400000,
   /** (number) maxAge in ms (default is 1 days)，cookie的过期时间 */
   overwrite: true,
   /** (boolean) can overwrite or not (default true) */
@@ -43,8 +39,11 @@ app.use(session({
   /** (boolean) signed or not (default true) */
   store: new Redis() // 将session存入redis 不传options 默认就是连接127.0.0.1:6379
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 
-
+//配置bodyparser的中间件
+app.use(bodyParser());
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
@@ -71,6 +70,16 @@ async function start() {
   app.use(myblog.routes()).use(myblog.allowedMethods())
 
   app.use((ctx) => {
+    // let user = {
+    //   email: ctx.cookies.get('usermail'),
+    //   pass: ctx.cookies.get('userinfo')
+    // }
+    // DB.find('users', user).then(res => {
+    //   console.log(res)
+    // });
+
+
+
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling
     ctx.req.ctx = ctx // This might be useful later on, e.g. in nuxtServerInit or with nuxt-stash

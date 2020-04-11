@@ -6,6 +6,7 @@
     @mousedown="mousedown"
   >
     <audio
+      preload="auto"
       @loadedmetadata="onLoadedmetadata"
       ref="audio"
       @pause="onPause"

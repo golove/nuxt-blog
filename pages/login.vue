@@ -46,7 +46,7 @@
               ></v-img>
             </div>
 
-            <v-checkbox v-model="autoLogin" label="自动登录"></v-checkbox>
+            <!-- <v-checkbox v-model="autoLogin" label="自动登录"></v-checkbox> -->
             <v-alert dense outlined v-show="alertflag" :type="isSuccess[issuc]">
               {{
               subtitle
@@ -67,13 +67,14 @@
 </template>
 
 <script>
+import CryptoJS from 'crypto-js'
 import { mapActions } from 'vuex'
 export default {
   name: 'login',
   data() {
     return {
       vCode: '',
-      autoLogin: false,
+      // autoLogin: false,
       verifycode: {},
       subtitle: '',
       alertflag: false,
@@ -96,12 +97,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['userlogin']),
-    ...mapActions({ getdata: 'content/getdata' }),
+    ...mapActions({ userlogin: 'userlogin', getdata: 'content/getdata' }),
     validate() {
       if (this.$refs.form.validate()) {
         this.$axios
-          .post('/login', this.user)
+          .post('/login', {
+            name: this.user.name,
+            pass: CryptoJS.MD5(this.user.pass).toString()
+          })
           .then(res => {
             this.alertflag = true
             this.subtitle = res.msg
@@ -118,10 +121,7 @@ export default {
           })
       }
     },
-    setCookie() {
-      window.document.cookie = 'nihao' + '=' + 'value'
-      console.log(window.document.cookie)
-    },
+
     getVerifycode() {
       this.$axios
         .get(
@@ -130,7 +130,7 @@ export default {
         .then(res => {
           this.vCode = ''
           this.verifycode = res.data
-          console.log(res)
+          // console.log(res)
         })
     },
 
@@ -145,14 +145,11 @@ export default {
   },
   mounted() {
     this.getVerifycode()
-    if (this.$store.state.content.avatars.length === 0) {
-      this.getdata({ api: '/dlavatar', type: 'avatars' })
-    }
   }
 }
 </script>
 <style >
 .rowstyle {
-  height: 91vh;
+  min-height: 91vh;
 }
 </style>

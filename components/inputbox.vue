@@ -85,7 +85,7 @@ export default {
       this.item.avatar = this.$store.state.user.avatar
       if (this.item.text !== '') {
         this.$axios
-          .post('/api/insertletters', this.item)
+          .post('/insertletters', this.item)
           .then(res => {
             this.$store.commit('pushdata', {
               type: 'letters',

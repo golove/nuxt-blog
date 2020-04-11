@@ -111,7 +111,8 @@ export const actions = {
                         idlists.join(',')
                     )
                     .then(res => {
-                        if (state.songs.length = 0) {
+                        let ar = Object.keys(state.song)
+                        if (ar.length === 0) {
                             dispatch('playlist', res.songs[0])
                         }
                         commit('getmusic', { type: 'songs', data: res.songs })
