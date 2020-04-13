@@ -87,7 +87,7 @@ export default {
         this.$axios
           .post('/insertletters', this.item)
           .then(res => {
-            this.$store.commit('pushdata', {
+            this.$store.commit('content/pushdata', {
               type: 'letters',
               data: res.ops[0]
             })

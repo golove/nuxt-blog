@@ -10,10 +10,13 @@ export const mutations = {
   },
 
   //user login 
-  USERLOGIN(state, user) {
-    state.user = user;
+  USERLOGIN(state, json) {
+    state.user = json.user;
     //save login infomations
-    window.sessionStorage.setItem('user', JSON.stringify(user))
+    if (json.flag) {
+      window.sessionStorage.setItem('user', JSON.stringify(json.user))
+    }
+
   },
   //user exit
   USEREXIT(state) {

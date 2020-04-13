@@ -92,6 +92,7 @@
                 </div>
               </template>
             </v-checkbox>
+            <v-checkbox v-model="autoLogin" label="自动登录"></v-checkbox>
             <v-alert dense outlined v-show="alertflag" :type="isSuccess[issuc]">
               {{
               subtitle
@@ -120,6 +121,7 @@ export default {
   components: { useravatar },
   data() {
     return {
+      autoLogin: false,
       genders: [
         { gender: '男', color: 'cyan' },
         { gender: '女', color: 'red' }
@@ -184,7 +186,7 @@ export default {
             this.subtitle = res.msg
             if (res.status === 200) {
               this.issuc = true
-              this.userlogin(res.data)
+              this.userlogin({ user: res.data, flag: this.autoLogin })
               setTimeout(() => {
                 // this.$router.push({ path: "/" });
                 // this.$router.go(-1)

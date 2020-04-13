@@ -1,5 +1,6 @@
 <template>
   <v-app :class="gray?'graystyle':''">
+    <!-- <star></star>x -->
     <v-navigation-drawer
       :color="$vuetify.theme.dark?'#272727':'#F0E5ED'"
       v-model="drawer"
@@ -96,6 +97,7 @@
       </v-toolbar-title>
       <v-spacer />
       <v-text-field
+        prepend-inner-icon="mdi-magnify"
         @change="search"
         v-model="searchmodeldata"
         solo-inverted
@@ -106,6 +108,7 @@
         hide-details
         :label="searchlabel"
       ></v-text-field>
+
       <v-spacer></v-spacer>
       <span class="d-sm-none d-md-flex d-none">
         <v-menu v-if="$store.state.user.name" :close-on-click="true" :offset-y="true">
@@ -148,6 +151,7 @@
         <search-result
           class="list-complete-item"
           @closeflag="changeFlag"
+          :str="$store.state.content.string"
           v-if="$store.state.content.searchflag"
           :searchData="$store.state.content.searchData"
         />
@@ -160,20 +164,17 @@
       :color="$vuetify.theme.dark?'#121212':'rgba(255,255,255,.6)'"
       :item="{author:'golove',time:'2020',version:'V5.0'}"
     />
-
-    <!-- <v-footer :clipped-left="cliped" :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>-->
   </v-app>
 </template>
 
 <script>
+import star from '~/components/star'
 import musicplayer from '~/components/music/musicplayer'
 import searchResult from '~/components/searchResult/searchResult'
 import blogfoot from '~/components/blogfoot.vue'
 import { mapActions, mapMutations } from 'vuex'
 export default {
-  components: { searchResult, blogfoot, musicplayer },
+  components: { searchResult, blogfoot, musicplayer, star },
   data() {
     return {
       cliped: true,
@@ -198,7 +199,7 @@ export default {
         { title: '音乐', to: '/music', icon: 'mdi-music' }
       ],
       usermenus: [
-        // { title: '个人中心', action: this.managepath, icon: 'mdi-account' },
+        { title: '个人中心', action: this.managepath, icon: 'mdi-account' },
 
         {
           title: '注销',
@@ -225,6 +226,9 @@ export default {
     }),
     toHome() {
       this.$router.push('/')
+    },
+    managepath() {
+      this.$router.push('/user')
     },
     // 控件方法
     changeflag() {
@@ -278,9 +282,13 @@ export default {
       }
     }
   },
-  async mounted() {
-    let res = await this.$axios.get('/getUser')
-    this.userlogin(res)
+  async created() {
+    let user = window.sessionStorage.getItem('user')
+
+    if (user !== null) {
+      let res = await this.$axios.get('/getUser')
+      this.userlogin({ user: res, flag: true })
+    }
   }
 }
 </script>
@@ -290,14 +298,18 @@ export default {
     200% 100% at bottom center,
     #f7f7b6,
     #e96f92,
-    #a35c91
+    #75517d,
+    #1b2947
   );
   background: radial-gradient(
     220% 105% at top center,
-    /* / #1b2947 #1b2947 10%,  #75517d */ #a35c91 20%,
+    #1b2947 10%,
+    #75517d 40%,
     #e96f92 65%,
     #f7f7b6
   );
+  background-attachment: fixed;
+  overflow: hidden;
 }
 .backgroundstylecolor {
   background: rgba(255, 255, 255, 0.6);

@@ -16,7 +16,8 @@ export const state = () => ({
     collect: [],
     comment: [],
     searchData: [],
-    searchflag: false
+    searchflag: false,
+    string: ''
 })
 export const mutations = {
     setdata(state, json) {
@@ -41,6 +42,7 @@ export const mutations = {
     searchFunc(state, str) {
         if (str !== '') {
             state.searchflag = true
+            state.string = str
             state.searchData = state.article.filter((el => {
                 return el.author.indexOf(str) > -1 || el.type.indexOf(str) > -1
                     || returnFunc(el, str).length > 0 || (new Date(el.time).toLocaleDateString()).indexOf(str) > -1

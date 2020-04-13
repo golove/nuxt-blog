@@ -1,7 +1,8 @@
 <template>
   <v-hover v-slot:default="{hover}" open-delay="100">
-    <v-card :color="$vuetify.theme.dark?'#5A5A5A':'#F0E5ED'" @click="showDetail" max-width="100%">
+    <v-card :color="$vuetify.theme.dark?'#5A5A5A':'#F0E5ED'" max-width="100%">
       <v-img
+        @click="showDetail"
         class="white--text align-end"
         width="auto"
         height="159px"
@@ -27,9 +28,9 @@
       <v-toolbar class="mt-1" color="transparent" dense flat>
         <div class="d-flex justify-start align-center">
           <div class="dot"></div>
-          {{item.author?item.author:'未知作者'}}
+          <a @click.stop="searchFunc(item.author)">{{item.author?item.author:'未知作者'}}</a>
           <div class="dot"></div>
-          {{item.type?item.type:'未分类'}}
+          <a @click.stop="searchFunc(item.type)">{{item.type?item.type:'未分类'}}</a>
         </div>
         <v-spacer></v-spacer>
         <v-menu transition="slide-y-transition" offset-y>
@@ -51,9 +52,12 @@
           <v-list-item class="pa-0">
             <v-list-item-content class="pa-0">
               <v-list-item-title
+                @click="showDetail"
                 v-if="item.blocks"
                 class="title font-weight-black"
-              >{{headerBlocks[0]?headerBlocks[0].data.text:paragraphBlocks[0]?paragraphBlocks[0].data.text:'作者很懒居然什么文字都没写'}}</v-list-item-title>
+              >
+                <a>{{headerBlocks[0]?headerBlocks[0].data.text:paragraphBlocks[0]?paragraphBlocks[0].data.text:'作者很懒居然什么文字都没写'}}</a>
+              </v-list-item-title>
 
               <v-list-item-subtitle
                 class="font-weight-medium"
@@ -107,6 +111,7 @@ export default {
   },
   methods: {
     ...mapMutations({
+      searchFunc: 'content/searchFunc',
       articleEdit: 'articleEdit',
       removed: 'content/remove'
     }),

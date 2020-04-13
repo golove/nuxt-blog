@@ -46,7 +46,7 @@
               ></v-img>
             </div>
 
-            <!-- <v-checkbox v-model="autoLogin" label="自动登录"></v-checkbox> -->
+            <v-checkbox v-model="autoLogin" label="自动登录"></v-checkbox>
             <v-alert dense outlined v-show="alertflag" :type="isSuccess[issuc]">
               {{
               subtitle
@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       vCode: '',
-      // autoLogin: false,
+      autoLogin: false,
       verifycode: {},
       subtitle: '',
       alertflag: false,
@@ -110,7 +110,7 @@ export default {
             this.subtitle = res.msg
             if (res.status === 200) {
               this.issuc = true
-              this.userlogin(res.data)
+              this.userlogin({ user: res.data, flag: this.autoLogin })
               setTimeout(() => {
                 this.$router.go(-1)
               }, 600)

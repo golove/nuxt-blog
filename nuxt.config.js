@@ -51,8 +51,7 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
-    'cookie-universal-nuxt',
+    '@nuxtjs/proxy'
   ],
   proxy: {
     '/api': {
