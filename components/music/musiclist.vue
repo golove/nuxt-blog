@@ -5,7 +5,7 @@
         <th class="text-left" style="width:30px;margin:8px"></th>
         <th class="text-left" style="margin:8px">歌曲</th>
         <th class="text-left" style="margin:8px">歌手</th>
-        <th class="text-left" style="margin:8px">专辑</th>
+        <th v-show="albflag" class="text-left" style="margin:8px">专辑</th>
         <th class="text-left" style="margin:8px">时长</th>
         <!-- <th class="text-left" style="width:80px">热度</th> -->
       </tr>
@@ -24,8 +24,8 @@
       <td>{{ item.name }}</td>
       <td v-if="item.ar">{{ item.ar[0].name}}</td>
       <td v-else>{{ item.artists[0].name }}</td>
-      <td v-if="item.al">{{ item.al.name }}</td>
-      <td v-else>{{ item.album.name }}</td>
+      <td v-show="albflag" v-if="item.al">{{ item.al.name }}</td>
+      <td v-show="albflag" v-else>{{ item.album.name }}</td>
       <td v-if="item.dt">{{timeToMinute(item.dt) }}</td>
       <td v-else>{{timeToMinute(item.duration) }}</td>
       <!-- <td>{{ item.mark }}</td> -->
@@ -37,7 +37,8 @@
 <script>
 export default {
   props: {
-    items: Array
+    items: Array,
+    albflag: Boolean
   },
   methods: {
     playMusic(e) {

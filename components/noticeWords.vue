@@ -48,8 +48,8 @@ export default {
   position: relative;
   width: 100%;
   border-radius: 4px;
-  background: rgba(243, 243, 243, 0.5);
-  padding: 12px;
+  /* background: rgba(243, 243, 243, 0.5); */
+  padding: 12px 0;
 }
 
 .noticecontent {

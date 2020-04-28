@@ -1,9 +1,17 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-col cols="12">
+    <v-col class="pa-0" cols="12">
+      <banner />
+    </v-col>
+    <v-col class="pa-0" cols="12">
       <noticeWords @random="shuffle('noticewords')" :items="$store.state.content.noticewords" />
     </v-col>
-    <v-col class="py-0" cols="12">
+
+    <v-col class="pa-0 mt-2" cols="12">
+      <chips :chips="categoryUser" />
+    </v-col>
+
+    <v-col class="px-0 pb-0" cols="12">
       <dividline
         :dark="$vuetify.theme.dark"
         @shuffle="shuffle('article')"
@@ -11,7 +19,7 @@
         :item="item"
       ></dividline>
     </v-col>
-    <v-col>
+    <v-col class="pa-0">
       <transition-group name="list-complete" tag="div" class="row">
         <v-col
           class="list-complete-item"
@@ -30,7 +38,7 @@
 
     <v-col
       cols="12"
-      class="text-center"
+      class="text-center pa-0"
       v-if="Math.ceil($store.state.content.article.length/sliceN)>1"
     >
       <v-pagination
@@ -41,28 +49,35 @@
         next-icon="mdi-menu-right"
       ></v-pagination>
     </v-col>
+
+    <v-col class="pa-0" cols="12">
+      <chips :chips="categoryType" />
+    </v-col>
   </v-layout>
 </template>
 
 <script>
+import banner from '~/components/banner.vue'
+import chips from '~/components/chips.vue'
 import noticeWords from '../components/noticeWords.vue'
 import dividline from '../components/Dividingline.vue'
 import hCard from '../components/hCard.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   components: {
     noticeWords,
     dividline,
-    hCard
+    hCard,
+    chips,
+    banner
   },
   data() {
     return {
       page: 1,
       sliceN: 16,
-
       item: {
         icon: 'mdi-book',
-        title: '精品文章',
+        title: '全部文章',
         type: 'article',
         content: 'new',
         badge: true,
@@ -80,7 +95,14 @@ export default {
       this.$store.commit('content/shuffle', type)
     }
   },
-  mounted() {
+  computed: {
+    ...mapGetters({
+      categoryType: 'content/categoryType',
+      categoryUser: 'content/categoryUser'
+    })
+  },
+
+  created() {
     if (this.$store.state.content.article.length === 0) {
       this.getdata({ api: '/myblog', type: 'article' })
     }

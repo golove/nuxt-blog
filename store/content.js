@@ -1,4 +1,7 @@
+import FiltterType from './FiltterType'
+
 export const state = () => ({
+
     letters: [],
     letters2: [],
     avatars: [],
@@ -19,10 +22,43 @@ export const state = () => ({
     searchflag: false,
     string: ''
 })
+
+// export const getters = () => ({
+//     category: state => {
+//         let arr = state.article.map(e => {
+//             return e.type
+//         })
+
+//         return Array.from(new Set(arr))
+//     }
+// })
+
+export const getters = {
+    categoryType: state => {
+        let arr = state.article.map(e => {
+            return e.type
+        })
+        let arrFil = new FiltterType(Array.from(new Set(arr)))
+        return arrFil.types
+    },
+    categoryUser: state => {
+        let arr = state.article.map(e => {
+            return { author: e.author, avatar: e.avatar }
+        })
+        // 对象数组去重
+        let result = arr.reduce((prev, cur) => {
+            const ids = prev.map(item => item.author)
+            return ids.includes(cur.author) ? prev : [...prev, cur]
+        }, []);
+
+        let arrFil = new FiltterType(result)
+        return arrFil.types
+    },
+}
+
 export const mutations = {
     setdata(state, json) {
         state[json.type] = json.data
-        state[json.type].reverse()
         // console.log(state[json.type])
     },
     pushdata(state, json) {
@@ -83,13 +119,17 @@ export const actions = {
 
         if (json.type === 'letters') {
             commit('setdata', { type: 'letters2', data: res })
+
+
         }
 
         if (res instanceof Array) {
             commit('setdata', { type: json.type, data: res })
+
         } else {
             if (res.data instanceof Array) {
                 commit('setdata', { type: json.type, data: res.data })
+
             } else {
                 console.log(res)
                 // commit('setdata', { type: json.type, data: res.data.list })

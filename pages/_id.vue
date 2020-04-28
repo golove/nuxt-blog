@@ -27,6 +27,7 @@ import action from '~/components/actions.vue'
 import msgBoard from '~/components/msgBoard.vue'
 export default {
   async asyncData({ app, store, params }) {
+    debugger
     if (store.state.content.article.length > 0) {
       return {
         initData: store.state.content.article.find(e => {
@@ -68,7 +69,7 @@ export default {
   },
   methods: {
     onSave(response) {
-      console.log(response)
+      // console.log(response)
       this.savedData = response
     },
     onReady() {

@@ -10,18 +10,35 @@
       </v-btn>
     </v-col>
 
-    <transition-group class="justifycenter" name="list-complete">
-      <inputbox :key="true" v-show="flag" class="list-complete-item mb-2" @setdata="setdata" />
-
-      <twittercard
-        v-for="(item,index) in $store.state.content.letters.slice((page-1)*sliceN,page*sliceN)"
-        :key="item._id"
-        class="list-complete-item ma-1 align-self-auto"
-        :n="index + sliceN * (page - 1)"
-        :item="item"
-      />
-    </transition-group>
-
+    <v-col cols="12">
+      <transition-group class="row justifycenter" name="list-complete" tag="div">
+        <v-col
+          xl="4"
+          lg="6"
+          md="6"
+          sm="12"
+          xs="12"
+          :key="true"
+          v-show="flag"
+          class="list-complete-item mb-2"
+        >
+          <inputbox @setdata="setdata" />
+        </v-col>
+        <v-col
+          xl="4"
+          lg="6"
+          md="6"
+          sm="12"
+          xs="12"
+          v-for="(item,index) in $store.state.content.letters.slice((page-1)*sliceN,page*sliceN)"
+          :key="item._id"
+          class="list-complete-item ma-1 align-self-auto"
+          :n="index + sliceN * (page - 1)"
+        >
+          <twittercard :item="item" />
+        </v-col>
+      </transition-group>
+    </v-col>
     <v-col
       cols="12"
       class="text-center"
@@ -41,7 +58,7 @@
 
 <script>
 import inputbox from '~/components/inputbox'
-import twittercard from '~/components/twittercard'
+import twittercard from '~/components/twittercard/index.vue'
 import { mapActions } from 'vuex'
 export default {
   name: 'index',
@@ -80,6 +97,8 @@ export default {
 .justifycenter {
   display: flex;
   justify-content: center;
+  /* align-content: center; */
+
   flex-wrap: wrap;
 }
 
@@ -91,7 +110,7 @@ export default {
   min-height: 90vh;
 }
 .list-complete-item {
-  max-width: 625px;
+  /* max-width: 625px; */
   transition: all 1.2s;
 }
 

@@ -82,68 +82,13 @@
         </template>
       </v-list>
     </v-navigation-drawer>
-
-    <v-app-bar
-      :color="$vuetify.theme.dark?'#232323':'rgba(240,229,237,.98)'"
-      dense
-      :clipped-left="cliped"
+    <appbar
+      :items="items"
+      @changeflag4="changeflag4"
+      @changedraw="changedraw"
+      :cliped="cliped"
       :fixed="fixed"
-      app
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-spacer></v-spacer>
-      <v-toolbar-title @click="toHome">
-        <img style="marginTop:10px" height="80px" src="../assets/golove.svg" alt />
-      </v-toolbar-title>
-      <v-spacer />
-      <v-text-field
-        prepend-inner-icon="mdi-magnify"
-        @change="search"
-        v-model="searchmodeldata"
-        solo-inverted
-        flat
-        clearable
-        dense
-        rounded
-        hide-details
-        :label="searchlabel"
-      ></v-text-field>
-
-      <v-spacer></v-spacer>
-      <span class="d-sm-none d-md-flex d-none">
-        <v-menu v-if="$store.state.user.name" :close-on-click="true" :offset-y="true">
-          <template v-slot:activator="{ on }">
-            <v-btn
-              v-on="on"
-              depressed
-              class="ml-4textcolor--text"
-              color="transparent"
-              v-text="$store.state.user.name"
-            ></v-btn>
-          </template>
-          <v-list>
-            <v-list-item v-for="(item, index) in usermenus" :key="index" @click="item.action">
-              <v-list-item-action>
-                <v-icon>{{ item.icon }}</v-icon>
-              </v-list-item-action>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-
-        <div v-else>
-          <v-btn class="mr-4" to="/login" text>login</v-btn>
-        </div>
-        <v-avatar size="40px">
-          <img
-            :src=" $store.state.user.avatar||'http://yanxuan.nosdn.127.net/85993c9896fee4a893dc299cd09581d9.jpg'"
-            alt="avatar"
-          />
-        </v-avatar>
-      </span>
-
-      <v-spacer />
-    </v-app-bar>
+    />
 
     <v-content :class="$vuetify.theme.dark?'':'backgroundstylecolor'">
       <musicplayer />
@@ -156,7 +101,7 @@
           :searchData="$store.state.content.searchData"
         />
       </transition>
-      <v-container :class="$store.state.content.searchflag?'searchblur':''">
+      <v-container class="pa-0" :class="$store.state.content.searchflag?'searchblur':''">
         <nuxt />
       </v-container>
     </v-content>
@@ -168,21 +113,20 @@
 </template>
 
 <script>
-import star from '~/components/star'
-import musicplayer from '~/components/music/musicplayer'
-import searchResult from '~/components/searchResult/searchResult'
+import appbar from '~/components/appbar.vue'
+import star from '~/components/star.vue'
+import musicplayer from '~/components/music/musicplayer.vue'
+import searchResult from '~/components/searchResult/searchResult.vue'
 import blogfoot from '~/components/blogfoot.vue'
 import { mapActions, mapMutations } from 'vuex'
 export default {
-  components: { searchResult, blogfoot, musicplayer, star },
+  components: { appbar, searchResult, blogfoot, musicplayer, star },
   data() {
     return {
       cliped: true,
       drawer: false,
       fixed: false,
       miniVariant: false,
-      searchmodeldata: '',
-      searchlabel: '搜文章,作者,分类,发布时间',
       gray: false,
       items: [
         {
@@ -199,7 +143,7 @@ export default {
         { title: '音乐', to: '/music', icon: 'mdi-music' }
       ],
       usermenus: [
-        { title: '个人中心', action: this.managepath, icon: 'mdi-account' },
+        // { title: '个人中心', action: this.managepath, icon: 'mdi-account' },
 
         {
           title: '注销',
@@ -217,16 +161,12 @@ export default {
       reqMusic: 'music/reqMusic',
       getUser: 'getUser'
     }),
-    // ...mapMutations(['setdata', 'searchFunc', 'searchMsgFunc']),
-    ...mapMutations({
-      setdata: 'content/setdata',
-      searchFunc: 'content/searchFunc',
-      searchMsgFunc: 'content/searchMsgFunc',
-      changeFlag: 'content/changeflag'
-    }),
-    toHome() {
-      this.$router.push('/')
+    ...mapMutations({ changeFlag: 'content/changeflag' }),
+
+    changedraw() {
+      this.drawer = !this.drawer
     },
+
     managepath() {
       this.$router.push('/user')
     },
@@ -246,48 +186,15 @@ export default {
     },
     graystyle() {
       this.gray = !this.gray
-    },
-
-    search(string) {
-      if (this.$route.path.indexOf('/music') !== -1) {
-        this.searchMusic(string)
-      } else if (this.$route.path.indexOf('/message') !== -1) {
-        this.searchMsgFunc(string)
-      } else {
-        this.searchFunc(string)
-      }
-    },
-    //音乐所搜
-    searchMusic(e) {
-      this.reqMusic({ api: '/search?keywords=' + e, type: 'searchSong' })
-      this.$router.push('/music/songlist')
     }
   },
-  computed: {
-    isActive() {
-      return this.$route.path
-    }
-  },
-
-  watch: {
-    isActive: function(n, o) {
-      this.changeFlag()
-      this.searchmodeldata = ''
-      if (n.indexOf('/music') !== -1) {
-        this.searchlabel = '搜音乐,歌手,专辑'
-      } else if (n.indexOf('/message') !== -1) {
-        this.searchlabel = '搜留言,作者,发布时间'
-      } else {
-        this.searchlabel = '搜文章,作者,分类,发布时间'
-      }
-    }
-  },
-  async created() {
+  async mounted() {
     let user = window.sessionStorage.getItem('user')
 
     if (user !== null) {
       let res = await this.$axios.get('/getUser')
       this.userlogin({ user: res, flag: true })
+      // this.filterdatas()
     }
   }
 }

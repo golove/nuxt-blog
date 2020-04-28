@@ -84,6 +84,7 @@ export default {
 <style scoped>
 .searesult {
   position: fixed;
+  min-width: 1200px;
   z-index: 999;
 }
 .box {

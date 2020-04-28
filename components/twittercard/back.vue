@@ -36,15 +36,9 @@
       >评论</v-btn>
     </v-card-actions>
 
-    <table  width="100%" border="0" cellspacing="10" cellpadding="8">
+    <table width="100%" border="0" cellspacing="10" cellpadding="8">
       <transition-group name="list-complete" tag="tbody">
-        <live-msg
-          class="list-complete-item"
-          v-for="(e,i) in item.reply"
-          :key="e.time"
-         
-          :item="e"
-        />
+        <live-msg class="list-complete-item" v-for="(e) in item.reply" :key="e.time" :item="e" />
       </transition-group>
     </table>
   </v-card>
@@ -52,12 +46,11 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import liveMsg from './liveMsg'
+import liveMsg from '../liveMsg'
 export default {
   components: { liveMsg },
   props: {
-    item: Object,
-  
+    item: Object
   },
   data() {
     return {

@@ -56,7 +56,9 @@
                 v-if="item.blocks"
                 class="title font-weight-black"
               >
-                <a>{{headerBlocks[0]?headerBlocks[0].data.text:paragraphBlocks[0]?paragraphBlocks[0].data.text:'作者很懒居然什么文字都没写'}}</a>
+                <a
+                  class="astyle"
+                >{{headerBlocks[0]?headerBlocks[0].data.text:paragraphBlocks[0]?paragraphBlocks[0].data.text:'作者很懒居然什么文字都没写'}}</a>
               </v-list-item-title>
 
               <v-list-item-subtitle
@@ -181,5 +183,13 @@ export default {
   opacity: 0.6;
   position: absolute;
   width: 100%;
+}
+.astyle {
+  text-decoration: none;
+}
+
+.astyle:hover {
+  text-decoration: none;
+  border-bottom: solid 2px rgb(0, 132, 255);
 }
 </style>

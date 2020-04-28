@@ -13,7 +13,7 @@
         </v-list-item-content>
       </v-list-item>
     </v-card>
-    <musiclist :items="$store.state.music.songs" />
+    <musiclist :items="$store.state.music.songs" :albflag="true" />
   </v-card>
 </template>
 

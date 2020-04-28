@@ -1,13 +1,13 @@
 
 export const state = () => ({
-  token: '',
-  user: {}
+
+  user: {},
+  myCollects: [],
+  myArticle: [],
 })
 
 export const mutations = {
-  setToken(state, token) {
-    state.token = token
-  },
+
 
   //user login 
   USERLOGIN(state, json) {
@@ -92,17 +92,25 @@ export const mutations = {
     })
   },
 
+  filterdatas(state) {
+
+    for (let e of state.content.article) {
+      let n = e.collect.indexOf(state.user.name)
+
+      if (n > -1) {
+        state.myCollects.push(e)
+      }
+      if (state.user.name === e.author) {
+        state.myArticle.push(e)
+      }
+    }
+  },
+
 }
 
 
 export const actions = {
-  // nuxtServerInit({ commit }, { req }) {
-  //   let cookie = req.headers.cookie;
 
-  //   // 将cookie转成json对象（自己实现该方法）
-  //   let token = cookieparse(cookie).token;
-  //   commit('setToken', token);
-  // },
 
   // user login
   userlogin({

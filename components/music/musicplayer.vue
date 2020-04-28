@@ -71,7 +71,7 @@
       </v-btn>
     </div>
     <div :class="listflag?'liststyle1':'liststyle2'" class="liststyle">
-      <musiclist :items="$store.state.music.songs" />
+      <musiclist :items="$store.state.music.songs" :albflag="false" />
     </div>
   </div>
 </template>

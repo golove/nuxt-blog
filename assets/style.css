@@ -44,8 +44,17 @@
 .overflowstyle::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 5px;
-  box-shadow: inset 0 0 5px rgba(230, 203, 233, 0.8);
-  background: rgba(255, 255, 255, 0.8);
+  /* box-shadow: inset 0 0 5px rgba(230, 203, 233, 0.8); */
+  /* background: rgba(255, 255, 255, 0.8); */
+  background-color: red;
+  background-image: -webkit-linear-gradient(45deg,
+      rgba(255, 255, 255, 0.3) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0.3) 75%,
+      transparent 75%,
+      transparent);
 }
 
 .overflowstyle::-webkit-scrollbar-track {
@@ -59,23 +68,37 @@
 html::-webkit-scrollbar {
   /*滚动条整体样式*/
   cursor: pointer;
-  width: 8px;
+  width: 6px;
   /*高宽分别对应横竖滚动条的尺寸*/
   height: 0px;
+  transition: all .6s ease;
+}
+
+html::-webkit-scrollbar:hover {
+  width: 12px;
 }
 
 html::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 5px;
-  box-shadow: inset 0 0 5px rgba(230, 203, 233, 0.8);
-  background: rgba(226, 8, 8, 0.8);
+  /* box-shadow: inset 0 0 5px rgba(230, 203, 233, 0.8);
+  background: rgba(226, 8, 8, 0.8); */
+  background-color: red;
+  background-image: -webkit-linear-gradient(45deg,
+      rgba(255, 255, 255, 0.3) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0.3) 75%,
+      transparent 75%,
+      transparent);
 }
 
 html::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
-  box-shadow: inset 0 0 5px rgba(223, 206, 235, 0.2);
-  border-radius: 5px;
-  background: rgba(234, 204, 235, 0.1);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+
+  background: rgba(234, 204, 235, 0.5);
 }
 
 a {
@@ -85,5 +108,5 @@ a {
 
 a:hover {
   text-decoration: none;
-  border-bottom: solid 2px rgb(0, 132, 255);
+  /* border-bottom: solid 2px rgb(0, 132, 255); */
 }

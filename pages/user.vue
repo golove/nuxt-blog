@@ -58,6 +58,28 @@ export default {
         }
       ]
     }
+  },
+  methods: {},
+  watch: {
+    article: {
+      //深度监听，可监听到对象、数组的变化
+      handler(val, oldVal) {
+        this.filterdatas(val)
+      },
+      deep: true //true 深度监听
+    }
+  },
+  computed: {
+    article: function() {
+      return this.$store.state.content.article
+    }
+  },
+  mounted() {
+    // this.filterdatas(this.$store.state.content.article)
+    // console.log(this.$store.state.user.name === undefined)
+    // if (this.$store.state.user.name === undefined) {
+    //   this.$router.push('/login')
+    // }
   }
 }
 </script>
