@@ -54,6 +54,7 @@ export const getters = {
         let arrFil = new FiltterType(result)
         return arrFil.types
     },
+
 }
 
 export const mutations = {
@@ -67,6 +68,16 @@ export const mutations = {
 
     remove(state, json) {
         state[json.type].splice(json.n, 1)
+    },
+    deletedata(state, json) {
+
+        state[json.type].forEach((e, i) => {
+            if (e[json.key] === json.node) {
+                state[json.type].splice(i, 1)
+            }
+        })
+
+
     },
     shuffle(state, type) {
         state[type] = _.shuffle(state[type])

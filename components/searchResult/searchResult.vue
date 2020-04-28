@@ -1,6 +1,6 @@
 <template>
-  <v-row class="searesult" justify="center">
-    <v-col sm="12" md="12" lg="9" xl="7">
+  <v-row class="searesult">
+    <v-col cols="12">
       <v-toolbar color="rgba(255,255,255,0.3)" dense>
         <v-toolbar-title
           v-if="searchData.length>0"
@@ -84,8 +84,11 @@ export default {
 <style scoped>
 .searesult {
   position: fixed;
-  min-width: 1200px;
-  z-index: 999;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 1200px;
+  z-index: 99;
 }
 .box {
   background: rgba(255, 255, 255, 0.6);

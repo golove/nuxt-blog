@@ -6,9 +6,37 @@ export const state = () => ({
   myArticle: [],
 })
 
+
+export const getters = {
+  manageArticle: state => {
+
+    let usersArts = state.content.article.filter(e => {
+      return e.author === state.user.name
+    })
+
+    let arr = usersArts.map(e => {
+      let titles = [];
+      for (const el of e.blocks) {
+        if (el.type === "header") {
+          titles.push(el.data.text)
+        }
+      }
+      return {
+        id: e._id,
+        type: e.type,
+        title: titles[0],
+        comment: e.reply.length,
+        like: e.like.length,
+        see: e.see,
+        collect: e.collect.length
+      }
+    })
+    console.log(arr)
+    return arr
+  }
+}
+
 export const mutations = {
-
-
   //user login 
   USERLOGIN(state, json) {
     state.user = json.user;

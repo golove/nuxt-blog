@@ -32,6 +32,7 @@
                 prepend-icon="mdi-refresh"
                 @click:prepend="getVerifycode"
                 :rules="vcodeRules"
+                @keyup.13="validate"
                 label="请输入验证码"
                 v-model="vCode"
                 single-line

@@ -145,6 +145,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.item.time)
     this.time = timeago(this.item.time)
   }
 }

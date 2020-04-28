@@ -35,7 +35,7 @@
         :class="searhflag?'changesearchinput':'searchinput'"
       >
         <v-icon>mdi-magnify</v-icon>
-        <input v-model="searchmodeldata" @change="search" type="text" :placeholder="searchlabel" />
+        <input v-model="searchmodeldata" @keyup.13="search" type="text" :placeholder="searchlabel" />
       </div>
     </div>
     <!-- 登录按钮---------------------------- -->
@@ -99,7 +99,7 @@ export default {
       searchmodeldata: '',
       searchlabel: '搜索文章,作者,分类,发布时间',
       usermenus: [
-        // { title: '个人中心', action: this.managepath, icon: 'mdi-account' },
+        { title: '管理中心', action: this.managepath, icon: 'mdi-account' },
 
         {
           title: '注销',
@@ -122,6 +122,9 @@ export default {
     }),
     toHome() {
       this.$router.push('/')
+    },
+    managepath() {
+      this.$router.push('/manage')
     },
     search(obj) {
       let string = obj.target.value

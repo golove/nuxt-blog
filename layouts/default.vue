@@ -102,7 +102,9 @@
         />
       </transition>
       <v-container class="pa-0" :class="$store.state.content.searchflag?'searchblur':''">
-        <nuxt />
+        <transition name="list-complete">
+          <nuxt class="list-complete-item" />
+        </transition>
       </v-container>
     </v-content>
     <blogfoot
@@ -143,7 +145,7 @@ export default {
         { title: '音乐', to: '/music', icon: 'mdi-music' }
       ],
       usermenus: [
-        // { title: '个人中心', action: this.managepath, icon: 'mdi-account' },
+        { title: '管理中心', action: this.managepath, icon: 'mdi-account' },
 
         {
           title: '注销',
@@ -168,7 +170,7 @@ export default {
     },
 
     managepath() {
-      this.$router.push('/user')
+      this.$router.push('/manage')
     },
     // 控件方法
     changeflag() {

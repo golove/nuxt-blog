@@ -70,7 +70,7 @@ export default {
           userId: this.$store.state.user._id,
           avatar: this.$store.state.user.avatar,
           name: this.$store.state.user.name,
-          time: Date.parse(date),
+          time: date.getTime(),
           reply: this.reply.trim(),
           like: 0
         }

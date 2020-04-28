@@ -244,7 +244,7 @@ p {
 #musicplayer {
   border-radius: 5px;
   box-shadow: 3px 3px 12px rgba(23, 24, 39, 0.6);
-  z-index: 99;
+  z-index: 199;
   position: fixed;
   top: 350px;
   left: 10px;
