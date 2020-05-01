@@ -137,7 +137,7 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-chat-processing',
           title: '留言',
           to: '/inspire'
         },
@@ -160,7 +160,7 @@ export default {
       userexit: 'userexit',
       userlogin: 'userlogin',
       getdata: 'content/getdata',
-      reqMusic: 'music/reqMusic',
+
       getUser: 'getUser'
     }),
     ...mapMutations({ changeFlag: 'content/changeflag' }),

@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       page: 1,
-      sliceN: 16,
+      sliceN: 24,
       item: {
         icon: 'mdi-book',
         title: '全部文章',

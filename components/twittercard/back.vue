@@ -63,14 +63,14 @@ export default {
     ...mapMutations(['lettersEdit']),
 
     addmsg() {
+      console.log(time)
       if (this.$store.state.user.name) {
-        let date = new Date()
         let msgItem = {
           articleId: this.item._id,
           userId: this.$store.state.user._id,
           avatar: this.$store.state.user.avatar,
           name: this.$store.state.user.name,
-          time: date.getTime(),
+          time: new Date().getTime(),
           reply: this.reply.trim(),
           like: 0
         }

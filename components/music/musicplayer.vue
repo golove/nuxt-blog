@@ -309,7 +309,7 @@ p {
 }
 
 .liststyle1 {
-  height: 760px;
+  height: 560px;
   overflow: scroll;
 }
 

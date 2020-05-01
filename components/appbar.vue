@@ -77,11 +77,14 @@
         color="orange"
       >{{!$vuetify.theme.dark?'mdi-white-balance-sunny':'mdi-moon-waxing-crescent'}}</v-icon>
     </v-btn>
-    <v-app-bar-nav-icon
+    <!-- <v-app-bar-nav-icon
       style="color:#98E511"
       class="d-none d-md-flex"
       @click.stop="$emit('changedraw')"
-    />
+    />-->
+    <v-btn class="d-none d-md-flex" @click.stop="$emit('changedraw')" color="#98E511" icon>
+      <v-icon>mdi-microsoft-xbox-controller-menu</v-icon>
+    </v-btn>
     <v-spacer></v-spacer>
   </v-app-bar>
 </template>
@@ -111,7 +114,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      userexit: 'userexit'
+      userexit: 'userexit',
+      reqMusic: 'music/reqMusic'
     }),
     ...mapMutations({
       filterdatas: 'filterdatas',
