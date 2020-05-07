@@ -29,8 +29,7 @@
             />
             <div class="d-flex">
               <v-text-field
-                prepend-icon="mdi-refresh"
-                @click:prepend="getVerifycode"
+                :prepend-icon="wharrule(vCode)?'mdi-check':'mdi-window-close'"
                 :rules="vcodeRules"
                 @keyup.13="validate"
                 label="请输入验证码"
@@ -40,7 +39,10 @@
                 dense
               ></v-text-field>
               <v-img
+                title="看不清?点击更换"
+                @click="getVerifycode"
                 contain
+                style="cursor:pointer"
                 aspect-ratio="2.81"
                 height="35px"
                 :src="this.verifycode.verifyCodeImgUrl"
@@ -90,11 +92,11 @@ export default {
       },
       valid: true,
       nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters'
+        v => !!v || '忘写名字啦!!!',
+        v => (v && v.length <= 10) || '名字不能超过10个字符哦'
       ],
-      vcodeRules: [v => !!v || 'verifycode is required', v => this.wharrule(v)],
-      passRules: [v => !!v || 'Pass is required']
+      vcodeRules: [v => !!v || '你忘写了验证码啦', v => this.wharrule(v)],
+      passRules: [v => !!v || '嘿等等你密码还没写呢']
     }
   },
   methods: {
@@ -136,9 +138,8 @@ export default {
     },
 
     wharrule(v) {
-      // console.log(v, this.verifycode.verifyCode)
       if (v !== this.verifycode.verifyCode) {
-        return '验证码错误请从新输入'
+        return false
       } else {
         return true
       }

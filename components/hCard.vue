@@ -75,7 +75,7 @@
           </v-list-item>
         </v-list>
       </v-card-text>
-      <action :item="item" :flag="false" :disabled="false" />
+      <action :item="item" :flag="true" :disabled="false" />
       <svg
         style="display:none"
         xmlns="http://www.w3.org/2000/svg"

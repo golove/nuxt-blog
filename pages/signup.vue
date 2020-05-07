@@ -48,8 +48,7 @@
             />
             <div class="d-flex">
               <v-text-field
-                prepend-icon="mdi-refresh"
-                @click:prepend="getVerifycode"
+                :prepend-icon="wharrule(vCode)?'mdi-check':'mdi-window-close'"
                 :rules="vcodeRules"
                 label="请输入验证码"
                 v-model="vCode"
@@ -58,6 +57,8 @@
                 dense
               ></v-text-field>
               <v-img
+                title="看不清?点击更换"
+                @click="getVerifycode"
                 contain
                 aspect-ratio="2.81"
                 height="35px"
@@ -154,21 +155,21 @@ export default {
       },
 
       nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters'
+        v => !!v || '忘写名字啦!!!',
+        v => (v && v.length <= 10) || '名字不能超过10个字符哦'
       ],
       emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        v => !!v || '需要填写邮箱的呢',
+        v => /.+@.+\..+/.test(v) || '邮箱写错了呢怎么这么不小心呢'
       ],
       passRules: [
-        v => !!v || 'password is required',
-        v => (v && v.length > 5) || 'password must be more than 5 characters'
+        v => !!v || '嘿等等你密码还没写呢',
+        v => (v && v.length > 5) || '密码太短啦小心被盗号哟'
       ],
-      vcodeRules: [v => !!v || 'verifycode is required', v => this.wharrule(v)],
+      vcodeRules: [v => !!v || '你忘写了验证码啦', v => this.wharrule(v)],
 
       telRules: [
-        v => !!v || 'tel is required',
+        v => !!v || '手机号码也要填写哦',
         v => /^1[3456789]\d{9}$/.test(v) || '请输入正确手机号码!'
       ],
       checkbox: false
@@ -216,7 +217,7 @@ export default {
     wharrule(v) {
       // console.log(v, this.verifycode.verifyCode)
       if (v !== this.verifycode.verifyCode) {
-        return '验证码错误请从新输入'
+        return false
       } else {
         return true
       }
