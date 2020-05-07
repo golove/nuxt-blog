@@ -24,7 +24,7 @@
 
     <table width="100%" border="0" cellspacing="15" cellpadding="8">
       <thead>
-        <tr class="etdstyle">
+        <tr>
           <th class="text-left" style="width:30px;margin:8px"></th>
           <th class="text-left" style="margin:8px"></th>
         </tr>

@@ -59,7 +59,7 @@ export const getters = {
 
 export const mutations = {
     setdata(state, json) {
-        state[json.type] = json.data
+        state[json.type] = json.data.reverse()
         // console.log(state[json.type])
     },
     pushdata(state, json) {

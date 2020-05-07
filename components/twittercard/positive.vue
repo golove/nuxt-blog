@@ -20,10 +20,7 @@
       </v-menu>
     </v-toolbar>
 
-    <v-card-text
-      :class="tflag?'tstyle':'wstyle'"
-      class="textsyle pl-12 pr-8 py-0 headline font-weight-bold"
-    >{{item.text}}</v-card-text>
+    <v-card-text class="textsyle pl-12 pr-8 py-0 headline font-weight-bold">{{item.text}}</v-card-text>
     <v-card-text class="pl-12 pr-6 py-0" style="opacity:.6">
       <b style="opacity: 0.6;
   font-size: 1em;">{{time}}</b>
@@ -56,34 +53,26 @@
           <v-icon class="mr-1">mdi-message</v-icon>评论
         </v-badge>
       </v-btn>
-
-      <!-- <v-btn icon>
-          <v-icon class="mr-1">mdi-share-variant</v-icon>分享
-      </v-btn>-->
-      <button @click="showtext" icon>
-        <v-icon>{{tflag?'mdi-chevron-double-up':'mdi-chevron-double-down'}}</v-icon>
-        {{tflag?'收起':'更多'}}
-      </button>
     </v-card-actions>
-    <!-- <v-list color="transparent" three-line>
-        <template v-for="(item, index) in item.reply.slice(0,1 )">
-          <v-divider :key="index" :inset="true"></v-divider>
-          <v-list-item :key="item.title" @click="showmsg">
-            <v-list-item-avatar>
-              <v-img :src="item.avatar"></v-img>
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title>
-                <b>{{item.name}}</b>
-                <b style="opacity: 0.6;font-size: 0.8em;">{{new Date(item.time).toLocaleString()}}</b>
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                <b>{{item.reply}}</b>
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-    </v-list>-->
+    <v-list color="transparent" three-line>
+      <template v-for="(item, index) in item.reply.slice(0,1 )">
+        <v-divider :key="index" :inset="true"></v-divider>
+        <v-list-item :key="item.title" @click="showmsg">
+          <v-list-item-avatar size="35">
+            <v-img :src="item.avatar"></v-img>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title>
+              <b>{{item.name}}</b>
+              <b style="opacity: 0.6;font-size: 0.8em;">{{new Date(item.time).toLocaleString()}}</b>
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              <b>{{item.reply}}</b>
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+    </v-list>
   </div>
 </template>
 
@@ -91,7 +80,7 @@
 import timeago from '../../static/timeago.js'
 import { mapMutations } from 'vuex'
 export default {
-  props: { item: Object },
+  props: { item: Object, n: Number },
   data() {
     return {
       menulists: [{ title: '删除', func: this.remove }],

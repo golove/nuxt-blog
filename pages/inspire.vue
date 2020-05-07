@@ -8,38 +8,21 @@
         <v-icon>{{flag?'mdi-arrow-left':'mdi-pencil'}}</v-icon>
         {{flag?'返回':'写点什么吧!'}}
       </v-btn>
-    </v-col>
 
-    <v-col cols="12">
-      <transition-group class="row justifycenter" name="list-complete" tag="div">
-        <v-col
-          xl="4"
-          lg="6"
-          md="6"
-          sm="12"
-          xs="12"
-          :key="true"
-          v-show="flag"
-          class="list-complete-item mb-2"
-        >
-          <inputbox @setdata="setdata" />
-        </v-col>
-        <v-col
-          xl="4"
-          lg="6"
-          md="6"
-          sm="12"
-          xs="12"
-          v-for="(item,index) in $store.state.content.letters.slice((page-1)*sliceN,page*sliceN)"
+      <transition-group class="justifycenter" name="list-complete" tag="div">
+        <inputbox :key="true" v-show="flag" class="list-complete-item mb-2" @setdata="setdata" />
+
+        <twittercard
+          v-for="(item,index) in $store.state.content.letters"
           :key="item._id"
           class="list-complete-item ma-1 align-self-auto"
-          :n="index + sliceN * (page - 1)"
-        >
-          <twittercard :item="item" />
-        </v-col>
+          :n="index"
+          :item="item"
+        />
       </transition-group>
     </v-col>
-    <v-col
+
+    <!-- <v-col
       cols="12"
       class="text-center"
       v-if="Math.ceil($store.state.content.letters.length/sliceN)>1"
@@ -52,7 +35,7 @@
         prev-icon="mdi-menu-left"
         next-icon="mdi-menu-right"
       ></v-pagination>
-    </v-col>
+    </v-col>-->
   </v-row>
 </template>
 
@@ -95,11 +78,16 @@ export default {
   min-height: 95vh;
 }
 .justifycenter {
-  display: flex;
-  justify-content: center;
-  /* align-content: center; */
-
-  flex-wrap: wrap;
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  -moz-column-count: auto;
+  -webkit-column-count: auto;
+  column-count: auto;
+  column-width: 480px;
+  -moz-column-gap: 1em;
+  -webkit-column-gap: 1em;
+  column-gap: 1em;
 }
 
 .groupstyle {
@@ -124,6 +112,7 @@ export default {
 }
 
 .list-complete-leave-active {
+  width: 480px;
   position: absolute;
 }
 </style>

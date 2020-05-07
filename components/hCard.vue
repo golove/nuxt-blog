@@ -1,6 +1,6 @@
 <template>
   <v-hover v-slot:default="{hover}" open-delay="100">
-    <v-card :color="$vuetify.theme.dark?'#5A5A5A':'#F0E5ED'" max-width="100%">
+    <v-card class="hcardstyle" :color="$vuetify.theme.dark?'#5A5A5A':'#F0E5ED'">
       <v-img
         @click="showDetail"
         class="white--text align-end"
@@ -143,6 +143,12 @@ export default {
 </script>
 
 <style>
+.hcardstyle {
+  width: 260px;
+  margin: 0.3em;
+  flex-grow: 1;
+  align-self: start;
+}
 .svgfather {
   position: absolute;
   width: 100%;
@@ -153,6 +159,7 @@ export default {
   left: 0;
   width: 98px;
   height: 40px;
+  transition: all 1.2s;
   position: absolute;
 }
 .avatar {

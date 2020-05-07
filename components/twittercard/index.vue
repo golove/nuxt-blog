@@ -16,9 +16,11 @@
       :color="item.color"
       :dark="!item.tcolor"
       ref="cHeight"
+      hover
+      flat
       shaped
     >
-      <positive :item="item" @changeMaxH="changemaxheight" @changeflag="changeflag" />
+      <positive :n="n" :item="item" @changeMaxH="changemaxheight" @changeflag="changeflag" />
     </v-card>
 
     <v-card
@@ -27,6 +29,8 @@
       :dark="!item.tcolor"
       class="card2 overflowstyle"
       :class="flag?'card2_1':''"
+      hover
+      flat
       shaped
     >
       <msgboard @backmsg="backmsg" :item="item" />
@@ -77,6 +81,9 @@ export default {
 .wrap {
   position: relative;
   opacity: 0.8;
+  -webkit-column-break-inside: avoid;
+  margin-bottom: 1em;
+  break-inside: avoid;
 }
 .wrap,
 .card1,

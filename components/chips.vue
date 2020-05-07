@@ -48,4 +48,17 @@ export default {
   margin: 0 auto;
   background: rgba(250, 250, 250, 0.3);
 }
+.list-complete-item {
+  transition: all 1.2s;
+}
+
+.list-complete-enter,
+.list-complete-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.list-complete-leave-active {
+  position: absolute;
+}
 </style>

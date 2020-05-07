@@ -18,21 +18,14 @@
         @changebadge="changebadge"
         :item="item"
       ></dividline>
-    </v-col>
-    <v-col class="pa-0">
-      <transition-group name="list-complete" tag="div" class="row">
-        <v-col
+      <transition-group name="list-complete" tag="div" class="maincontstyle">
+        <h-card
           class="list-complete-item"
           :key="item._id"
           v-for="(item,index) in $store.state.content.article.slice((page-1)*sliceN,page*sliceN)"
-          xl="2"
-          lg="3"
-          md="4"
-          sm="6"
-          xs="6"
-        >
-          <h-card :n="index + sliceN * (page - 1)" :item="item"></h-card>
-        </v-col>
+          :n="index + sliceN * (page - 1)"
+          :item="item"
+        ></h-card>
       </transition-group>
     </v-col>
 
@@ -119,5 +112,26 @@ export default {
 <style scoped>
 .noticewords {
   transition: all 1.6s;
+}
+.maincontstyle {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+  align-content: flex-start;
+}
+.list-complete-item {
+  transition: all 1.2s;
+}
+.list-complete-enter,
+.list-complete-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.list-complete-leave-active {
+  position: absolute;
 }
 </style>

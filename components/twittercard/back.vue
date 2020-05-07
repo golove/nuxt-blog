@@ -36,7 +36,13 @@
       >评论</v-btn>
     </v-card-actions>
 
-    <table width="100%" border="0" cellspacing="10" cellpadding="8">
+    <table width="100%" border="0" cellspacing="15" cellpadding="8">
+      <thead>
+        <tr class="etdstyle">
+          <th class="text-left" style="width:30px;margin:8px"></th>
+          <th class="text-left" style="margin:8px"></th>
+        </tr>
+      </thead>
       <transition-group name="list-complete" tag="tbody">
         <live-msg class="list-complete-item" v-for="(e) in item.reply" :key="e.time" :item="e" />
       </transition-group>
@@ -63,7 +69,6 @@ export default {
     ...mapMutations(['lettersEdit']),
 
     addmsg() {
-      console.log(time)
       if (this.$store.state.user.name) {
         let msgItem = {
           articleId: this.item._id,

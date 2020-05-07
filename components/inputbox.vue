@@ -34,7 +34,10 @@
       v-model="item.text"
     ></v-textarea>
 
-    <v-card-text class="ml-6 pl-12 pr-6 py-0" style="opacity:.6">{{item.time}}</v-card-text>
+    <v-card-text
+      class="ml-6 pl-12 pr-6 py-0"
+      style="opacity:.6"
+    >{{new Date(item.time).toLocaleDateString()}}</v-card-text>
 
     <v-card-actions class="justify-space-around" style="opacity:0.7">
       <v-btn icon @click="colorpicker=!colorpicker">
@@ -75,7 +78,7 @@ export default {
       flag: 0,
       tcolor: false,
       color: '',
-      time: new Date()
+      time: new Date().getTime()
     },
     user: {}
   }),
@@ -117,10 +120,14 @@ export default {
 .card6 {
   width: 100%;
   opacity: 0.8;
+  margin: 0.2em;
+}
+textarea {
+  min-width: 300px;
 }
 
 /*滚动条样式*/
-#input-90::-webkit-scrollbar {
+textarea::-webkit-scrollbar {
   /*滚动条整体样式*/
   cursor: pointer;
   width: 8px;
@@ -128,14 +135,14 @@ export default {
   height: 0px;
 }
 
-#input-90::-webkit-scrollbar-thumb {
+textarea::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
   border-radius: 5px;
   box-shadow: inset 0 0 5px rgba(230, 203, 233, 0.8);
   background: rgba(255, 255, 255, 0.8);
 }
 
-#input-90::-webkit-scrollbar-track {
+textarea::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
   box-shadow: inset 0 0 5px rgba(223, 206, 235, 0.2);
   border-radius: 5px;
