@@ -114,7 +114,6 @@ export default {
       if (!this.tflag) {
         this.$emit('changeflag')
         setTimeout(() => {
-          //   this.maxheight = '800px'
           this.$emit('changeMaxH', '800px')
         }, 600)
       } else {
@@ -122,7 +121,6 @@ export default {
         setTimeout(() => {
           this.$emit('changeflag')
           setTimeout(() => {
-            // this.maxheight = '800px'
             this.$emit('changeMaxH', '800px')
           }, 600)
         }, 300)
@@ -134,7 +132,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.item.time)
     this.time = timeago(this.item.time)
   }
 }
