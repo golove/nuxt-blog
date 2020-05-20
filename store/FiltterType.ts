@@ -9,6 +9,7 @@ class FiltterType {
         react: 'mdi-react',
         angular: 'mdi-angular',
         nuxt: 'mdi-nuxt',
+        electron: "mdi-electron-framework"
         散文: 'mdi-book-open',
         小说: 'mdi-page-layout-sidebar-right',
         诗词: 'mdi-file'
@@ -23,11 +24,12 @@ class FiltterType {
         react: '#6198F6',
         angular: '#F66189',
         nuxt: '#0c5e4d',
+        electron: '#fc5e40',
         散文: '#e59b75',
         小说: '#f2467c',
         诗词: '#f38476'
     };
-    atype: Array<string> = ['javascript', 'java', 'python', ' typesctipt', 'vue', 'react', 'angular', 'nuxt', '散文', '小说', '诗词']
+    atype: Array<string> = ['javascript', 'java', 'python', ' typesctipt', 'vue', 'react', 'angular', 'nuxt', 'electron', '散文', '小说', '诗词']
     types: Array<object>;
     constructor(type: Array<any>) {
         this.types = this.generObj(type)

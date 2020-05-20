@@ -20,9 +20,9 @@
         <svg class="gbsoubadge" :style="{fill:$vuetify.theme.dark?'#5A5A5A': '#F0E5ED'}">
           <use slot="icon" xlink:href="#bg_source_badge" />
         </svg>
-        <v-avatar class="avatar" size="30">
+        <div class="avatar" size="30">
           <img :src="item.avatar" />
-        </v-avatar>
+        </div>
       </div>
 
       <v-toolbar class="mt-1" color="transparent" dense flat>
